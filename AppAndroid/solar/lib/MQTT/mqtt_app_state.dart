@@ -99,6 +99,7 @@ class MQTTAppState with ChangeNotifier{
   dynamic get getConnectionStringText => _connectionStringText;
   Garden get getGardent => _garden;
   Garden get getGardent1 => _garden1;
+  Gate get getGate => _gate;
 }
 
 class Garden{
@@ -166,13 +167,13 @@ class Garden{
   int get getMode => _mode;
 }
 class Gate{
-  int _docao;
+  dynamic _docao;
   int _chedo;
   int _maybom;
   int _maybomButton;
 
   Gate({
-    required int docao,
+    required dynamic docao,
     required int chedo,
     required int maybom,
     required int maybomButton,
@@ -186,7 +187,11 @@ class Gate{
     _maybomButton = state;
   }
 
-  int get getDoCao => _docao;
+  void setChedo(int chedo){
+    _chedo = chedo;
+  }
+
+  dynamic get getDoCao => _docao;
   int get getCheDo => _chedo;
   int get getMayBom => _maybom;
   int get getMayBomButton => _maybomButton;

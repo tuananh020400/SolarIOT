@@ -93,6 +93,62 @@ class _MQTTViewState extends State<MQTTView>{
     );
   }
 
+  Widget _buildGatePageButton(MQTTAppConnectionState state){
+    return InkWell(
+        onTap: () {
+          if(state == MQTTAppConnectionState.connected) {
+            Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => GatePage()));
+          }
+          else{
+            return null;
+          }
+        },
+        child: Padding(
+          padding: EdgeInsets.only(top: 0,left: 5,right: 5,bottom: 5),
+          child: Container(
+            padding: EdgeInsets.only(top: 30,bottom: 20,left: 30, right: 30),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: state == MQTTAppConnectionState.connected? Color(0xFF292636) : Colors.grey,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+                children: <Widget>[
+                  Container(
+                    child: Text('GateWay',style: TextStyle(
+                        color: state == MQTTAppConnectionState.connected? Colors.white : Colors.white38,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold
+                    ),
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.all(20)),
+                  LinearPercentIndicator(
+                    width: MediaQuery.of(context).size.width * 0.6,
+                    lineHeight: 25,
+                    animation: false,
+                    progressColor: Colors.blue,
+                    backgroundColor:state == MQTTAppConnectionState.connected? Colors.white54 : Colors.white10,
+                    percent:state == MQTTAppConnectionState.connected? _currentAppState.getGardent.getNhietDo.toDouble() / 100 : 0,
+                    center:state == MQTTAppConnectionState.connected? Text('${_currentAppState.getGardent.getNhietDo.toDouble()}%') :
+                    Text('Mực nước',style: TextStyle(
+                        color: Colors.white38,
+                        fontWeight: FontWeight.bold
+                    ),),
+                    linearStrokeCap: LinearStrokeCap.roundAll,
+                    leading: Text('Mực nước  ',style: TextStyle(
+                        color: state == MQTTAppConnectionState.connected? Colors.white : Colors.white38,
+                        fontWeight: FontWeight.bold
+                    ),),
+                  )
+                ]
+            ),
+          ),
+        )
+    );
+  }
+
   Widget _buildGardenButton(MQTTAppConnectionState state){
     return InkWell(
         onTap: () {
@@ -337,61 +393,6 @@ class _MQTTViewState extends State<MQTTView>{
     );
   }
 
-  Widget _buildGatePageButton(MQTTAppConnectionState state){
-    return InkWell(
-        onTap: () {
-          if(state == MQTTAppConnectionState.connected) {
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => GatePage()));
-          }
-          else{
-            return null;
-          }
-        },
-        child: Padding(
-          padding: EdgeInsets.only(top: 0,left: 5,right: 5,bottom: 5),
-          child: Container(
-            padding: EdgeInsets.only(top: 30,bottom: 20,left: 30, right: 30),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              color: state == MQTTAppConnectionState.connected? Color(0xFF292636) : Colors.grey,
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Column(
-                children: <Widget>[
-                  Container(
-                    child: Text('GateWay',style: TextStyle(
-                        color: state == MQTTAppConnectionState.connected? Colors.white : Colors.white38,
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold
-                    ),
-                    ),
-                  ),
-                  Padding(padding: EdgeInsets.all(20)),
-                  LinearPercentIndicator(
-                    width: MediaQuery.of(context).size.width * 0.6,
-                    lineHeight: 25,
-                    animation: false,
-                    progressColor: Colors.blue,
-                    backgroundColor:state == MQTTAppConnectionState.connected? Colors.white54 : Colors.white10,
-                    percent:state == MQTTAppConnectionState.connected? _currentAppState.getGardent.getNhietDo.toDouble() / 100 : 0,
-                    center:state == MQTTAppConnectionState.connected? Text('${_currentAppState.getGardent.getNhietDo.toDouble()}%') :
-                    Text('Mực nước',style: TextStyle(
-                        color: Colors.white38,
-                        fontWeight: FontWeight.bold
-                    ),),
-                    linearStrokeCap: LinearStrokeCap.roundAll,
-                    leading: Text('Mực nước  ',style: TextStyle(
-                        color: state == MQTTAppConnectionState.connected? Colors.white : Colors.white38,
-                        fontWeight: FontWeight.bold
-                    ),),
-                  )
-                ]
-            ),
-          ),
-        )
-    );
-  }
 
   void _configureAndConnect(){
     _manager = MQTTManager(

@@ -1,6 +1,7 @@
 #include <SoftwareSerial.h>
 String inputString;
 bool stringComplete = false;
+int i = 0;
 SoftwareSerial Serial_Arduino(4,5);//RX - 3 - TX - 4
 void setup() {
   Serial.begin(9600);
@@ -9,8 +10,10 @@ void setup() {
 }
 void loop() {
   Read_UART();
-  Serial_Arduino.println("Hello i am Arduino");
-  delay(500);
+  String text = (String)i;
+  Serial_Arduino.println(text);
+  i++;
+  delay(1000);
 }
 void Read_UART()
 {

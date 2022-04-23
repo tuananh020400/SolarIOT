@@ -4,7 +4,6 @@
 #include <WiFi.h>          //https://github.com/esp8266/Arduino
 #endif
 
-//needed for library
 #include <DNSServer.h>
 #if defined(ESP8266)
 #include <ESP8266WebServer.h>
@@ -29,7 +28,7 @@ bool stringComplete = false;
 
 WiFiClient espClient;
 PubSubClient client(espClient);
-SoftwareSerial Serial_ESP(14,12);// RX D5 noi voi chan 4 - TX D6 noi voi chan 3
+SoftwareSerial Serial_ESP(13,5);// RX D5 noi voi chan 4 - TX D6 noi voi chan 3
 
 void callback(char *topic, byte *payload, unsigned int length)
 {
@@ -118,20 +117,12 @@ void loop() {
        lastLed = millis();
        }
   }
-  else
-  {
-  }
+  else{}
   if(!client.connected())
     reconnect();
   client.loop();
   client.setCallback(callback);
   Read_UART_ESP();
-  client.publish(PUB_TOPIC,"1234");
-  delay(500);
-  String stringOne = "A string";
-  char Buf[50];
-  stringOne.toCharArray(Buf, 50);
-  client.publish(PUB_TOPIC,Buf);
 }
 
 void Read_UART_ESP()
@@ -149,12 +140,10 @@ void Read_UART_ESP()
     {
       Serial.print("Data nhận được: ");
       Serial.println(inputString);
-      String stringOne = "A string";
       char Buf[50];
-      stringOne.toCharArray(Buf, 50);
+      inputString.toCharArray(Buf, 50);
       client.publish(PUB_TOPIC,Buf);
       client.publish(PUB_TOPIC,"Alo");
-
       inputString = "";
       stringComplete = false;
     }
