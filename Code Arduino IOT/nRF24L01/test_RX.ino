@@ -4,23 +4,23 @@
  * 
  * VCC - 3.3v
  * GND - GND
- * CSN - 9
- * CE - 10
+ * CSN - 8
+ * CE - 7
  * SCK - 13
  * MOSI - 11
  * MISO - 12
  */
+
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <RF24.h>
 
-RF24 radio(9,10); // CE, CSN
-const byte diachi[6] = "00001";
+RF24 radio(7, 8); // CE, CSN
+const byte diachi[6] = "12345";
 
 void setup() 
 {
   Serial.begin(9600);
-  Serial.print("HEllo");
   
   if (!radio.begin()) 
   {

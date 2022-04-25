@@ -129,8 +129,8 @@ class _GatePageState extends State<GatePage> with SingleTickerProviderStateMixin
         setState(() {});
         _mqtt.getAppState.getGate.setChedo( _mqtt.getAppState.getGate.getCheDo == 1? 0 : 1);
         index == 1?
-        _mqtt.getManager.publish("Manual Mode"):
-        _mqtt.getManager.publish("Auto Mode");
+        _mqtt.getManager.publish("I1J"):
+        _mqtt.getManager.publish("I0J");
       },
       width: MediaQuery.of(context).size.width,
       hight: 70,
@@ -148,14 +148,30 @@ class _GatePageState extends State<GatePage> with SingleTickerProviderStateMixin
         child: Container(
           child: Row(
           children: [
-            SizedBox(
-              height: 100,
-              child: Transform.rotate(
-                  angle: pi/2,
-                child: _mqtt.getAppState.getGate.getMayBom == 1?
-                  Image.asset('assets/pumpon.png'):
-                  Image.asset('assets/pump.png'),
-              )
+            Expanded(
+                child: CupertinoSwitch(
+                    value: _mqtt.getAppState.getGate.getMayBomButton == 1?true : false,
+                    onChanged: (index){
+                      setState(() {});
+                      _mqtt.getAppState.getGate.getMayBomButton == 1?
+                      _mqtt.getAppState.getGate.setMayBomButton(0):
+                      _mqtt.getAppState.getGate.setMayBomButton(1);
+                      index == true?
+                      _mqtt.getManager.publish('J1K'):
+                      _mqtt.getManager.publish('J0K');
+                    }
+                ),
+            ),
+            Expanded(
+                child: SizedBox(
+                    height: 100,
+                    child: Transform.rotate(
+                      angle: pi/2,
+                      child: _mqtt.getAppState.getGate.getMayBom == 1?
+                      Image.asset('assets/pumpon.png'):
+                      Image.asset('assets/pump.png'),
+                    )
+                )
             )
           ],)
         ),

@@ -115,8 +115,8 @@ class _NodePageState extends State<NodePage> with TickerProviderStateMixin{
         setState(() {});
         _mqtt.getAppState.getGardent.setMode( _mqtt.getAppState.getGardent.getMode == 1? 0 : 1);
         index == 1?
-        _mqtt.getManager.publish("Manual Mode"):
-        _mqtt.getManager.publish("Auto Mode");
+        _mqtt.getManager.publish("D1E"):
+        _mqtt.getManager.publish("D0E");
       },
       width: MediaQuery.of(context).size.width,
       hight: 70,
@@ -221,8 +221,8 @@ class _NodePageState extends State<NodePage> with TickerProviderStateMixin{
                               setState(() {});
                               _mqtt.getAppState.getGardent.setFanButton(_mqtt.getAppState.getGardent.getFanButton == 1? 0:1);
                               index == true?
-                              _mqtt.getManager.publish('Fan on'):
-                              _mqtt.getManager.publish('Fan off');
+                              _mqtt.getManager.publish('B1C'):
+                              _mqtt.getManager.publish('B0C');
                             }),
                       ) : SizedBox.shrink(),
                     ],
@@ -260,8 +260,8 @@ class _NodePageState extends State<NodePage> with TickerProviderStateMixin{
                             setState(() {});
                             _mqtt.getAppState.getGardent.setLightButton(_mqtt.getAppState.getGardent.getLightButton == 1? 0:1);
                             index == true?
-                            _mqtt.getManager.publish('Light on'):
-                            _mqtt.getManager.publish('Light off');
+                            _mqtt.getManager.publish('C1D'):
+                            _mqtt.getManager.publish('C0D');
                           },
                         ),
                       ) : SizedBox.shrink()
@@ -303,8 +303,8 @@ class _NodePageState extends State<NodePage> with TickerProviderStateMixin{
                               setState(() {});
                               _mqtt.getAppState.getGardent.setPumpButton(_mqtt.getAppState.getGardent.getPumpButton == 1? 0 : 1);
                               index == true?
-                              _mqtt.getManager.publish('Pump on'):
-                              _mqtt.getManager.publish('Pump off');
+                              _mqtt.getManager.publish('A1B'):
+                              _mqtt.getManager.publish('A0B');
                             }
                         ),
                       ): SizedBox.shrink(),

@@ -10,6 +10,7 @@
  * MOSI - 11 SPI
  * MISO - 12 SPI
  */
+
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <RF24.h>
@@ -20,7 +21,6 @@ const byte diachi[6] = "00001"; //Mảng kí tự dạng chuỗi có 6 kí tự
 void setup() 
 {
   Serial.begin(9600);
-  
   if (!radio.begin()) 
   {
     Serial.println("Module không khởi động được...!!");
@@ -52,7 +52,7 @@ void setup()
    */
   radio.stopListening(); //Cài đặt module là TX
   
-  while(!radio.available())
+  if (!radio.available())
   {
     Serial.println("Chưa kết nối được với RX...!!");
     Serial.println("CHỜ KẾT NỐI.......");

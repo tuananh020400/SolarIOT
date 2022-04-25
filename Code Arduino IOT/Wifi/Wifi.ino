@@ -28,7 +28,7 @@ bool stringComplete = false;
 
 WiFiClient espClient;
 PubSubClient client(espClient);
-SoftwareSerial Serial_ESP(13,5);// RX D5 noi voi chan 4 - TX D6 noi voi chan 3
+SoftwareSerial Serial_ESP(13,5);// RX D1 noi voi chan D4 - TX D6 noi voi chan 3
 
 void callback(char *topic, byte *payload, unsigned int length)
 {
@@ -41,7 +41,7 @@ void callback(char *topic, byte *payload, unsigned int length)
   Serial.print(topic);
   Serial.print("]: ");
   Serial.println(response);
-  Serial.println(response);
+  Serial_ESP.println(response);
 }
 
 void reconnect()
@@ -139,11 +139,8 @@ void Read_UART_ESP()
     if (stringComplete == true)
     {
       Serial.print("Data nhận được: ");
-      Serial.println(inputString);
-      char Buf[50];
-      inputString.toCharArray(Buf, 50);
-      client.publish(PUB_TOPIC,Buf);
-      client.publish(PUB_TOPIC,"Alo");
+      Serial.print(inputString);
+      client.publish(PUB_TOPIC,inputString.c_str());
       inputString = "";
       stringComplete = false;
     }

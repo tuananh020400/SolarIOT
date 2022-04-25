@@ -9,7 +9,8 @@ RF24 radio(7, 8); // CE, CSN
 const byte diachi[][6] = {"12345", "10000"};
 
 int servo = 5;
-int nutnhan = 6; boolean gtnutnhan = 0;
+int nutnhan = 6; 
+boolean gtnutnhan = 0;
 int gtbientro;
 
 void setup() 
