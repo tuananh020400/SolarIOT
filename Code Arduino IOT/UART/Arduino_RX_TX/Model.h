@@ -114,14 +114,28 @@ private:
   bool maybom;
   float docao;
 public:
-   Gate(bool chedo,bool maybom, float docao);
-
-   void setCheDo(bool chedo){
+   Gate(bool chedo,bool maybom, float docao){
      this->chedo = chedo;
+     this->maybom = maybom;
+     this->docao = docao;
+   };
+
+   void setCheDo(String chedoString){
+     if(chedoString == "1"){
+       this->chedo = 1;
+     }
+     else{
+       this->chedo = 0;
+     }
    }
 
-   void setMayBom(bool maybom){
-     this->maybom = maybom;
+   void setMayBom(String maybomString){
+     if(maybomString == "1"){
+       this->maybom = 1;
+     }
+     else{
+       this->maybom = 0;
+     }
    }
 
    void setDoCao(float docao){
@@ -139,4 +153,16 @@ public:
    float getDoCao(){
      return docao;
    }
+
+   void hienthi(){
+     Serial.println("Gate");
+     Serial.print("Che do: ");
+     Serial.println(chedo == 1?"Manual":"Auto");
+     Serial.print("May bom: ");
+     Serial.println(maybom);
+     Serial.print("Do cao");
+     Serial.println(docao);
+   }
+
+
 };

@@ -29,6 +29,7 @@ bool stringComplete = false;
 
 Garden garden1 = Garden(0,0,0,0,0,0,0);
 Garden garden2 = Garden(0,0,0,0,0,0,0);
+Gate gate = Gate(0,0,0);
 
 void setup() {
   Serial.begin(9600);
@@ -161,8 +162,20 @@ void XuLyChuoiESP(String chuoinhanESP){
     String data = chuoinhanESP.substring(findH + 1, findI);
     garden2.setMode(data);
   }
+
+  if (findI >= 0 && findJ >= 0){
+    String data = chuoinhanESP.substring(findI + 1, findJ);
+    gate.setCheDo(data);
+  }
+
+  if (findJ >= 0 && findK >= 0){
+    String data = chuoinhanESP.substring(findJ + 1, findK);
+    gate.setMayBom(data);
+  }
+  
   Serial.println("Garden1");
   garden1.hienthi();
   Serial.println("Garden2");
   garden2.hienthi();
+  gate.hienthi();
 }
