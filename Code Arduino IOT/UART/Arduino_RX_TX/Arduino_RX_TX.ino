@@ -31,6 +31,12 @@ Garden garden1 = Garden(0,0,0,0,0,0,0);
 Garden garden2 = Garden(0,0,0,0,0,0,0);
 Gate gate = Gate(0,0,0);
 
+void Read_UARTESP();
+void XuLyChuoiESP(String chuoinhanESP);
+void NRFSetup();
+void ReadNRF();
+void XulychuoiNRF(String chuoinhanNRF);
+
 void setup() {
   Serial.begin(9600);
   Serial_Arduino.begin(9600);
@@ -96,6 +102,50 @@ void ReadNRF(){
  radio.read(&receivenrf,sizeof(receivenrf));
  Serial.println((String)((char*)receivenrf));
  Serial_Arduino.println((String)((char*)receivenrf));
+ XulychuoiNRF((String)((char*)receivenrf));
+}
+
+void XulychuoiNRF(String chuoinhanNRF){
+  int findA = -1;
+  int findB = -1;
+
+  findA = chuoinhanNRF.indexOf("A");
+  findB = chuoinhanNRF.indexOf("B");
+
+  if(findA >= 0 && findB >= 0){
+    String data = chuoinhanNRF.substring(findA + 1, findB);
+    if(data == "1"){
+      SetCambien(chuoinhanNRF,&garden1);
+    }
+    else if(data == "2"){
+      SetCambien(chuoinhanNRF,&garden2);
+    }
+  }
+}
+
+void SetCambien(String chuoinhanNRF,Garden *garden){
+  int findB = -1;
+  int findC = -1;
+  int findD = -1;
+  int findE = -1;
+
+  findB = chuoinhanNRF.indexOf("B");
+  findC = chuoinhanNRF.indexOf("C");
+  findD = chuoinhanNRF.indexOf("D");
+  findE = chuoinhanNRF.indexOf("E");
+
+  if(findB >= 0 && findC >= 0){
+    String data = chuoinhanNRF.substring(findB + 1, findC);
+    garden->setNhietDo(data.toFloat());
+  }
+  if(findC >= 0 && findD >= 0){
+    String data = chuoinhanNRF.substring(findC + 1, findD);
+    garden->setDoAm(data.toFloat());
+  }
+  if(findD >= 0 && findE >= 0){
+    String data = chuoinhanNRF.substring(findD + 1, findE);
+    garden->setDoAmDat(data.toFloat());
+  }
 }
 
 void XuLyChuoiESP(String chuoinhanESP){
@@ -172,7 +222,7 @@ void XuLyChuoiESP(String chuoinhanESP){
     String data = chuoinhanESP.substring(findJ + 1, findK);
     gate.setMayBom(data);
   }
-  
+
   Serial.println("Garden1");
   garden1.hienthi();
   Serial.println("Garden2");

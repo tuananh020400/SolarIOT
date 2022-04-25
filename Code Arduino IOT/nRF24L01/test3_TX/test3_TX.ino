@@ -37,11 +37,11 @@ void setup()
 
 void loop() 
 {
-  String text = "A1B23.6C60.6D";
+  String text = "A1B23.6C60.6D23E";
   char mang[30];
   text.toCharArray(mang,30);
   radio.write(&mang, sizeof(mang));
   Serial.println("Da gui");
-  delay(200);
+  delay(1500);
   
 }

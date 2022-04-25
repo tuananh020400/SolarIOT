@@ -98,7 +98,13 @@ public:
   void hienthi(){
     Serial.print("Mode: ");
     Serial.println(mode == 1?"Manual":"Auto");
-    Serial.print("Pump :");
+    Serial.print("Nhiet do: ");
+    Serial.println(nhietdo);
+    Serial.print("Do am: ");
+    Serial.println(doam);
+    Serial.print("Do am dat: ");
+    Serial.println(doamdat);
+    Serial.print("Pump:");
     Serial.println(pump);
     Serial.print("Fan: ");
     Serial.println(fan);
@@ -163,6 +169,4 @@ public:
      Serial.print("Do cao");
      Serial.println(docao);
    }
-
-
 };
