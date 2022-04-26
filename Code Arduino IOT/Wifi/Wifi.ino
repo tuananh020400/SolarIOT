@@ -138,12 +138,78 @@ void Read_UART_ESP()
     }
     if (stringComplete == true)
     {
-      Serial.print("Data nhận được: ");
-      Serial.print(inputString);
-      client.publish(PUB_TOPIC,inputString.c_str());
+      // Serial.print("Data nhận được: ");
+      // Serial.print(inputString);
+      Serial.println((JSON(inputString)));
+      client.publish(PUB_TOPIC,(JSON(inputString)).c_str());
       inputString = "";
       stringComplete = false;
     }
   }
+}
+String JSON(String inputString){
+  int findA = -1;
+  int findB = -1;
+  int findC = -1;
+  int findD = -1;
+  int findE = -1;
+  int findF = -1;
+  int findG = -1;
+  int findH = -1;
+  int findI = -1;
+  int findJ = -1;
+  int findK = -1;
+  int findL = -1;
+  int findM = -1;
+  int findN = -1;
+  int findO = -1;
+  int findP = -1;
+  int findQ = -1;
+  int findR = -1;
+  String html;
+
+  findA = inputString.indexOf("A");
+  findB = inputString.indexOf("B");
+  findC = inputString.indexOf("C");
+  findD = inputString.indexOf("D");
+  findE = inputString.indexOf("E");
+  findF = inputString.indexOf("F");
+  findG = inputString.indexOf("G");
+  findH = inputString.indexOf("H");
+  findI = inputString.indexOf("I");
+  findJ = inputString.indexOf("J");
+  findK = inputString.indexOf("K");
+  findL = inputString.indexOf("L");
+  findM = inputString.indexOf("M");
+  findN = inputString.indexOf("N");
+  findO = inputString.indexOf("O");
+  findP = inputString.indexOf("P");
+  findQ = inputString.indexOf("Q");
+  findR = inputString.indexOf("R");
+
+  if(findA >= 0 && findB >= 0  && findC >= 0 && findD >= 0 && findE >= 0 && findF >= 0 && findG >= 0 && findH >= 0 && findI >= 0 && findJ >= 0 && findK >= 0 && findL >= 0 && findM >= 0 && findN >= 0 && findO >= 0 && findP >= 0 && findQ >= 0 && findR >= 0)
+  {
+   html =
+  "{ \"nhietdo\": " + inputString.substring(findA + 1, findB) + 
+  ", \"doam\": " + inputString.substring(findB + 1, findC) + 
+  ", \"doamdat\": "+ inputString.substring(findC + 1, findD) +
+  ", \"light\" : " + inputString.substring(findD + 1, findE) +
+  ", \"fan\" : " + inputString.substring(findE + 1, findF) +
+  ", \"pump\" : " + inputString.substring(findF + 1, findG) +
+  ", \"mode\" : " + inputString.substring(findG + 1, findH) + " }";
+//  ", \"nhietdo1\": " + inputString.substring(findH + 1,findI) +
+//  ", \"doam1\": " + inputString.substring(findI + 1, findJ) + 
+//  ", \"doamdat1\": " + inputString.substring(findJ + 1, findK) +
+//  ", \"light1\" : " + inputString.substring(findK + 1, findL) + 
+//  ", \"fan1\" : " + inputString.substring(findL + 1, findM) +
+//  ", \"pump1\" : " + inputString.substring(findM + 1, findN) +
+//  ", \"mode1\" : " + inputString.substring(findN + 1, findO) +
+//  ", \"chedo\" : " + inputString.substring(findO + 1, findP) + 
+//  ", \"maybom\" : " + inputString.substring(findP + 1,findQ) + 
+//  ", \"docao\" : " + inputString.substring(findQ + 1, findR) + " }";
+  }
+
+  return html;
+
 }
     

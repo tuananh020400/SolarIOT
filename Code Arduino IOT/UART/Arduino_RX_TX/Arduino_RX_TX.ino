@@ -46,6 +46,7 @@ void setup() {
 
 void loop() {
  Read_UARTESP();
+ sendESP();
  ReadNRF ();
  
 }
@@ -93,17 +94,16 @@ void NRFSetup(){
 
 void ReadNRF(){
  radio.stopListening();
- void Read_UARTESP();
+ Read_UARTESP();
  const char text[] = "Hello I am GateWay";
  radio.write(&text, sizeof(text));
  delay(10);
 
  radio.startListening();
  while (!radio.available());
- void Read_UARTESP();
+ Read_UARTESP();
  radio.read(&receivenrf,sizeof(receivenrf));
- Serial.println((String)((char*)receivenrf));
- Serial_Arduino.println((String)((char*)receivenrf));
+ //Serial.println((String)((char*)receivenrf));
  XulychuoiNRF((String)((char*)receivenrf));
  delay(10);
 }
@@ -231,4 +231,36 @@ void XuLyChuoiESP(String chuoinhanESP){
   Serial.println("Garden2");
   garden2.hienthi();
   gate.hienthi();
+}
+
+void sendESP(){
+  static int last = millis();
+  if(millis() - last >= 2000){
+    Serial_Arduino.println(chuoiguiESP());
+    last = millis();
+  }
+}
+
+String chuoiguiESP(){
+  String chuoigui = 
+  "A" + (String)garden1.getNhietDo() + 
+  "B" + (String)garden1.getDoAm() + 
+  "C" + (String)garden1.getDoAmDat() + 
+  "D" + (String)garden1.getLight() + 
+  "E" + (String)garden1.getFan() + 
+  "F" + (String)garden1.getPump() +
+  "G" + (String)garden1.getMode() +
+
+  "H" + (String)garden2.getNhietDo() + 
+  "I" + (String)garden2.getDoAm() + 
+  "J" + (String)garden2.getDoAmDat() + 
+  "K" + (String)garden2.getLight() + 
+  "L" + (String)garden2.getFan() +
+  "M" + (String)garden2.getPump() + 
+  "N" + (String)garden2.getMode() +
+
+  "O" + (String)gate.getCheDo() + 
+  "P" + (String)gate.getMayBom() + 
+  "Q" + (String)gate.getDoCao() + "R";
+  return chuoigui;
 }

@@ -36,10 +36,11 @@ class MQTTAppState with ChangeNotifier{
   IconData _icon = Icons.cloud_off;
   String _connectionStringText = 'Disconnected';
 
-  void setReceivedText(String text){
+  void setReceivedText(String text) {
     _receivedText = text;
     _json = jsonDecode(_receivedText);
-
+  }
+  void setGarden(){
     _garden = Garden(
         nhietDo: _json['nhietdo'],
         doAm: _json['doam'],
@@ -52,7 +53,10 @@ class MQTTAppState with ChangeNotifier{
         fanButton: _json['fan'],
         mode: _json['mode']
     );
+    notifyListeners();
+  }
 
+  void setGarden1(){
     _garden1 = Garden(
         nhietDo: _json['nhietdo1'],
         doAm: _json['doam1'],
@@ -65,12 +69,15 @@ class MQTTAppState with ChangeNotifier{
         fanButton: _json['fan1'],
         mode: _json['mode1']
     );
+    notifyListeners();
+  }
 
+  void setGate(){
     _gate = Gate(
-        docao: _json['docao'],
-        chedo: _json['chedo'],
-        maybom: _json['maybom'],
-        maybomButton: _json['maybombutton']
+      docao: _json['docao'],
+      chedo: _json['chedo'],
+      maybom: _json['maybom'],
+      maybomButton: _json['maybom'],
     );
     notifyListeners();
   }
