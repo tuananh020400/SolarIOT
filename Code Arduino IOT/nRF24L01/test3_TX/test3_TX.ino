@@ -42,6 +42,6 @@ void loop()
   text.toCharArray(mang,30);
   radio.write(&mang, sizeof(mang));
   Serial.println("Da gui");
-  delay(1500);
+  delay(10);
   
 }

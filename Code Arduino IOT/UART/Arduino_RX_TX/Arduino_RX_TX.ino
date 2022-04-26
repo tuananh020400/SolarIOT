@@ -93,16 +93,19 @@ void NRFSetup(){
 
 void ReadNRF(){
  radio.stopListening();
+ void Read_UARTESP();
  const char text[] = "Hello I am GateWay";
  radio.write(&text, sizeof(text));
  delay(10);
 
  radio.startListening();
  while (!radio.available());
+ void Read_UARTESP();
  radio.read(&receivenrf,sizeof(receivenrf));
  Serial.println((String)((char*)receivenrf));
  Serial_Arduino.println((String)((char*)receivenrf));
  XulychuoiNRF((String)((char*)receivenrf));
+ delay(10);
 }
 
 void XulychuoiNRF(String chuoinhanNRF){
