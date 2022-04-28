@@ -103,7 +103,7 @@ void ReadNRF(){
  while (!radio.available());
  Read_UARTESP();
  radio.read(&receivenrf,sizeof(receivenrf));
- //Serial.println((String)((char*)receivenrf));
+ Serial.println((String)((char*)receivenrf));
  XulychuoiNRF((String)((char*)receivenrf));
  delay(10);
 }
