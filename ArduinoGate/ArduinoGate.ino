@@ -76,7 +76,10 @@ void NRFSetup(){
 void ReadNRF(){
  radio.stopListening();
  Read_UARTESP();
- //const char text[] = "Hello I am GateWay";
+ String send = "A" + (String)garden1.getFan() + "B";
+ static char text[30];
+ send.toCharArray(text,30);
+
  radio.write(&text, sizeof(text));
  delay(10);
 
