@@ -70,6 +70,7 @@ void callback(char *topic, byte *payload, unsigned int length)
     Serial.println(response);
       XuLyChuoiMQTT(response);
       sendMQTT();
+      sendArduino();
       break;
   }
 }
@@ -328,12 +329,18 @@ void sendArduino(){
   "A" + (String)garden1.getPump() + 
   "B" + (String)garden1.getFan() + 
   "C" + (String)garden1.getLight() + 
-  "D" + (String)garden1.getMode() + 
+  "D" + (String)garden1.getMode() + "E";
+  Serial_ESP.println(send);
+  send =
   "E" + (String)garden2.getPump() + 
   "F" + (String)garden2.getFan() + 
   "G" + (String)garden2.getLight() + 
   "H" + (String)garden2.getMode() + "I";
-  Serial.print(send);
+  Serial_ESP.println(send);
+  send = 
+  "I" + (String)gate.getCheDo() + 
+  "J" + (String)gate.getMayBom() + "K";
+  Serial.println(send);
   Serial_ESP.println(send);
 }
 void sendMQTT(){

@@ -40,6 +40,11 @@ class MQTTAppState with ChangeNotifier{
     _receivedText = _receivedText + text;
     print(_receivedText);
     _json = jsonDecode(_receivedText);
+    if(_json ==
+        false){
+      _receivedText = '';
+    };
+
   }
   void setGarden(){
     _garden = Garden(
@@ -81,6 +86,11 @@ class MQTTAppState with ChangeNotifier{
       maybom: _json['maybom'],
       maybomButton: _json['maybom'],
     );
+    _receivedText = '';
+    notifyListeners();
+  }
+
+  void clearReceiveText(){
     _receivedText = '';
     notifyListeners();
   }
