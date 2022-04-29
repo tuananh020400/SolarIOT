@@ -32,7 +32,6 @@ void connectMQTT();
 void reconnect();
 void resetWifi();
 
-
 void setup() {
   Serial.begin(115200);
   Serial_ESP.begin(9600);
@@ -44,7 +43,7 @@ void setup() {
 void loop() {
   connectMQTT();
   Read_UART_ESP();
-  sendMQTT();
+  sendData();
 }
 
 void wifiSetup(){
@@ -154,12 +153,53 @@ void Read_UART_ESP()
     {
       Serial.print("Data nhận được: ");
       Serial.print(inputString);
-    //  client.publish(PUB_TOPIC,inputString.c_str());
-    //   Serial.print((JSON(inputString)));
-    //   client.publish(PUB_TOPIC,(JSON(inputString)).c_str());
+      XulychuoiUART(inputString);
       inputString = "";
       stringComplete = false;
     }
+  }
+}
+
+void XulychuoiUART(String chuoinhanUART){
+  int findA = -1;
+  int findB = -1;
+
+  findA = chuoinhanUART.indexOf("A");
+  findB = chuoinhanUART.indexOf("B");
+
+  if(findA >= 0 && findB >= 0){
+    String data = chuoinhanUART.substring(findA + 1, findB);
+    if(data == "1"){
+      SetCambien(chuoinhanUART,&garden1);
+    }
+    else if(data == "2"){
+      SetCambien(chuoinhanUART,&garden2);
+    }
+  }
+}
+
+void SetCambien(String chuoinhan,Garden *garden){
+  int findB = -1;
+  int findC = -1;
+  int findD = -1;
+  int findE = -1;
+
+  findB = chuoinhan.indexOf("B");
+  findC = chuoinhan.indexOf("C");
+  findD = chuoinhan.indexOf("D");
+  findE = chuoinhan.indexOf("E");
+
+  if(findB >= 0 && findC >= 0){
+    String data = chuoinhan.substring(findB + 1, findC);
+    garden->setNhietDo(data.toFloat());
+  }
+  if(findC >= 0 && findD >= 0){
+    String data = chuoinhan.substring(findC + 1, findD);
+    garden->setDoAm(data.toFloat());
+  }
+  if(findD >= 0 && findE >= 0){
+    String data = chuoinhan.substring(findD + 1, findE);
+    garden->setDoAmDat(data.toFloat());
   }
 }
 
@@ -282,55 +322,29 @@ String JsonGate(){
   return html;
 }
 
+void sendArduino(){
+  static String send = 
+  "A" + (String)garden1.getPump() + 
+  "B" + (String)garden1.getFan() + 
+  "C" + (String)garden1.getLight() + 
+  "D" + (String)garden1.getMode() + 
+  "E" + (String)garden2.getPump() + 
+  "F" + (String)garden2.getFan() + 
+  "G" + (String)garden2.getLight() + 
+  "H" + (String)garden2.getMode() + "I";
+  Serial_ESP.println(send);
+}
 void sendMQTT(){
-  static int last = millis();
-  if(millis() - last >= 2000){
     client.publish(PUB_TOPIC,JsonGarden1().c_str());
     client.publish(PUB_TOPIC,JSONGarden2().c_str());
     client.publish(PUB_TOPIC,JsonGate().c_str());
+}
+
+void sendData(){
+  static int last = millis();
+  if( millis() - last > 2000){
+    sendMQTT();
+    sendArduino();
     last = millis();
   }
 }
-
-// void XulychuoiUART(String chuoinhanUART){
-//   int findA = -1;
-//   int findB = -1;
-
-//   findA = chuoinhanUART.indexOf("A");
-//   findB = chuoinhanUART.indexOf("B");
-
-//   if(findA >= 0 && findB >= 0){
-//     String data = chuoinhanUART.substring(findA + 1, findB);
-//     if(data == "1"){
-//       SetCambien(chuoinhanUART,&garden1);
-//     }
-//     else if(data == "2"){
-//       SetCambien(chuoinhanUART,&garden2);
-//     }
-//   }
-// }
-
-// void SetCambien(String chuoinhan,Garden *garden){
-//   int findB = -1;
-//   int findC = -1;
-//   int findD = -1;
-//   int findE = -1;
-
-//   findB = chuoinhan.indexOf("B");
-//   findC = chuoinhan.indexOf("C");
-//   findD = chuoinhan.indexOf("D");
-//   findE = chuoinhan.indexOf("E");
-
-//   if(findB >= 0 && findC >= 0){
-//     String data = chuoinhan.substring(findB + 1, findC);
-//     garden->setNhietDo(data.toFloat());
-//   }
-//   if(findC >= 0 && findD >= 0){
-//     String data = chuoinhan.substring(findC + 1, findD);
-//     garden->setDoAm(data.toFloat());
-//   }
-//   if(findD >= 0 && findE >= 0){
-//     String data = chuoinhan.substring(findD + 1, findE);
-//     garden->setDoAmDat(data.toFloat());
-//   }
-// }

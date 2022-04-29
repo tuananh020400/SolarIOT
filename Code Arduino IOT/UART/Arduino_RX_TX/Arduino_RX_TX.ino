@@ -235,7 +235,7 @@ void XuLyChuoiESP(String chuoinhanESP){
 
 void sendESP(){
   static int last = millis();
-  if(millis() - last >= 2000){
+  if((millis() - last >= 2000)){
     Serial_Arduino.println(chuoiguiESP());
     last = millis();
   }

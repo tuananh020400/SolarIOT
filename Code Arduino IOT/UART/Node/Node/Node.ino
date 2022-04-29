@@ -35,7 +35,7 @@ void setup() {
 
 void loop() {
   ReadNRF();
-  Read_Sensor();
+  //Read_Sensor();
 }
 
 void NRFSetup(){
@@ -59,6 +59,9 @@ void NRFSetup(){
 
 void ReadNRF(){
  radio.stopListening();
+ Read_DAT();
+ Read_DHT();
+ text = "A1B" + (String)garden1.getNhietDo() + "C" + (String)garden1.getDoAm() + "D" + (String)garden1.getDoAmDat()+ "E";
  text.toCharArray(mang,30);
  radio.write(&mang, sizeof(mang));
  delay(10);
@@ -74,17 +77,17 @@ void ReadNRF(){
 void Read_DHT(){
   garden1.setDoAm(dht.readHumidity()); 
   garden1.setNhietDo(dht.readTemperature()) ;
-  Serial.print("Nhiet do: ");
-  Serial.println(garden1.getNhietDo());               
-  Serial.print("Do am: ");
-  Serial.println(garden1.getDoAm());
+//  Serial.print("Nhiet do: ");
+//  Serial.println(garden1.getNhietDo());               
+//  Serial.print("Do am: ");
+//  Serial.println(garden1.getDoAm());
 }
 
 void Read_DAT(){
   static float doAmDat = analogRead(A0);
   garden1.setDoAmDat(map(doAmDat,0,1023,0,100));
-  Serial.print("Do am dat");
-  Serial.println(garden1.getDoAmDat());
+//  Serial.print("Do am dat");
+//  Serial.println(garden1.getDoAmDat());
 }
 
 void Read_Sensor(){
