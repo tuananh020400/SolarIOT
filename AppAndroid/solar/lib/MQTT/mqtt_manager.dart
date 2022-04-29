@@ -36,6 +36,7 @@ class MQTTManager{
 
   void connect() async {
     assert(_client != null);
+    _currentState.clearReceiveText();
     try {
       print("Start client connecting...");
       _currentState.setAppConnectionState(MQTTAppConnectionState.connecting);

@@ -80,10 +80,15 @@ void ReadNRF(){
  "A" + (String)garden1.getPump() + 
  "B" + (String)garden1.getFan() + 
  "C" + (String)garden1.getLight() + 
- "D" + (String)garden1.getMode()+"E";
+ "D" + (String)garden1.getMode()+
+ "E" + (String)garden2.getPump() + 
+ "F" + (String)garden2.getFan() + 
+ "G" + (String)garden2.getLight() + 
+ "H" + (String)garden2.getMode() +
+ "I" + (String)gate.getCheDo() + 
+ "J" + (String)gate.getMayBom() + "K";
  static char text[30];
  send.toCharArray(text,30);
-
  radio.write(&text, sizeof(text));
  delay(10);
 
