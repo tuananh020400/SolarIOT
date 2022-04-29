@@ -323,7 +323,8 @@ String JsonGate(){
 }
 
 void sendArduino(){
-  static String send = 
+  static String send;
+  send = 
   "A" + (String)garden1.getPump() + 
   "B" + (String)garden1.getFan() + 
   "C" + (String)garden1.getLight() + 
@@ -332,6 +333,7 @@ void sendArduino(){
   "F" + (String)garden2.getFan() + 
   "G" + (String)garden2.getLight() + 
   "H" + (String)garden2.getMode() + "I";
+  Serial.print(send);
   Serial_ESP.println(send);
 }
 void sendMQTT(){
