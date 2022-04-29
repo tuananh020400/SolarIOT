@@ -76,7 +76,11 @@ void NRFSetup(){
 void ReadNRF(){
  radio.stopListening();
  Read_UARTESP();
- String send = "A" + (String)garden1.getFan() + "B";
+ String send = 
+ "A" + (String)garden1.getPump() + 
+ "B" + (String)garden1.getFan() + 
+ "C" + (String)garden1.getLight() + 
+ "D" + (String)garden1.getMode()+"E";
  static char text[30];
  send.toCharArray(text,30);
 
