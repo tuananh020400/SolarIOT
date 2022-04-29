@@ -16,6 +16,10 @@ bool stringComplete = false;
 byte receivenrf[30];
 char text[30];
 
+Garden garden1 = Garden(0,0,0,0,0,0,0);
+Garden garden2 = Garden(0,0,0,0,0,0,0);
+Gate gate = Gate(0,0,0);
+
 void setup() {
   Serial.begin(9600);
   Serial_Arduino.begin(9600);
@@ -42,6 +46,7 @@ void Read_UARTESP()
     if (stringComplete == true)
     {
       Serial.println(inputString);
+      XuLyChuoiESP(inputString);
       inputString = "";
       stringComplete = false;
     }
@@ -82,4 +87,82 @@ void ReadNRF(){
  //Serial.println((String)((char*)receivenrf));
  //XulychuoiNRF((String)((char*)receivenrf));
  delay(10);
+}
+
+void XuLyChuoiESP(String chuoinhanESP){
+  int findA = -1;
+  int findB = -1;
+  int findC = -1;
+  int findD = -1;
+  int findE = -1;
+  int findF = -1;
+  int findG = -1;
+  int findH = -1;
+  int findI = -1;
+  int findJ = -1;
+  int findK = -1;
+
+  findA = chuoinhanESP.indexOf("A");
+  findB = chuoinhanESP.indexOf("B");
+  findC = chuoinhanESP.indexOf("C");
+  findD = chuoinhanESP.indexOf("D");
+  findE = chuoinhanESP.indexOf("E");
+  findF = chuoinhanESP.indexOf("F");
+  findG = chuoinhanESP.indexOf("G");
+  findH = chuoinhanESP.indexOf("H");
+  findI = chuoinhanESP.indexOf("I");
+  findJ = chuoinhanESP.indexOf("J");
+  findK = chuoinhanESP.indexOf("K");
+
+  if (findA >= 0 && findB >= 0){
+    String data = chuoinhanESP.substring(findA + 1, findB);
+    garden1.setPump(data);
+  }
+
+  if (findB >= 0 && findC >= 0){
+    String data = chuoinhanESP.substring(findB + 1, findC);
+    garden1.setFan(data);
+  }
+
+  if (findC >= 0 && findD >= 0){
+    String data = chuoinhanESP.substring(findC + 1, findD);
+    garden1.setLight(data);
+  }
+
+  if (findD >= 0 && findE >= 0){
+    String data = chuoinhanESP.substring(findD + 1, findE);
+    garden1.setMode(data);
+  }
+
+  if (findE >= 0 && findF >= 0){
+    String data = chuoinhanESP.substring(findE + 1, findF);
+    garden2.setPump(data);
+  }
+
+  if (findF >= 0 && findG >= 0){
+    String data = chuoinhanESP.substring(findF + 1, findG);
+    garden2.setFan(data);
+  }
+
+  if (findG >= 0 && findH >= 0){
+    String data = chuoinhanESP.substring(findG + 1, findH);
+    garden2.setLight(data);
+  }
+
+  if (findH >= 0 && findI >= 0){
+    String data = chuoinhanESP.substring(findH + 1, findI);
+    garden2.setMode(data);
+  }
+
+  if (findI >= 0 && findJ >= 0){
+    String data = chuoinhanESP.substring(findI + 1, findJ);
+    gate.setCheDo(data);
+  }
+
+  if (findJ >= 0 && findK >= 0){
+    String data = chuoinhanESP.substring(findJ + 1, findK);
+    gate.setMayBom(data);
+  }
+
+  gate.hienthi();
 }
