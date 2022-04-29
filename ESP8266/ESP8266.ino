@@ -331,17 +331,20 @@ void sendArduino(){
   "C" + (String)garden1.getLight() + 
   "D" + (String)garden1.getMode() + "E";
   Serial_ESP.println(send);
+  delay(100);
   send =
   "E" + (String)garden2.getPump() + 
   "F" + (String)garden2.getFan() + 
   "G" + (String)garden2.getLight() + 
   "H" + (String)garden2.getMode() + "I";
   Serial_ESP.println(send);
+  delay(100);
   send = 
   "I" + (String)gate.getCheDo() + 
   "J" + (String)gate.getMayBom() + "K";
   Serial.println(send);
   Serial_ESP.println(send);
+  delay(100);
 }
 void sendMQTT(){
     client.publish(PUB_TOPIC,JsonGarden1().c_str());
@@ -351,7 +354,7 @@ void sendMQTT(){
 
 void sendData(){
   static int last = millis();
-  if( millis() - last > 2000){
+  if( millis() - last > 1000){
     sendMQTT();
     sendArduino();
     last = millis();

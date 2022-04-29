@@ -70,7 +70,7 @@ void ReadNRF(){
  while (!radio.available());
  radio.read(&receivenrf,sizeof(receivenrf));
  Serial.println((String)((char*)receivenrf));
- //XulychuoiNRF((String)((char*)receivenrf));
+ XulychuoiNRF((String)((char*)receivenrf));
  delay(10);
 }
 
@@ -99,4 +99,40 @@ void Read_Sensor(){
     //sprintf(text,"A1B%fC%fD%fE",
     lastSensor = millis();
   }
+}
+void XulychuoiNRF(String chuoinhanESP){
+  int findA = -1;
+  int findB = -1;
+  int findC = -1;
+  int findD = -1;
+  int findE = -1;
+
+  findA = chuoinhanESP.indexOf("A");
+  findB = chuoinhanESP.indexOf("B");
+  findC = chuoinhanESP.indexOf("C");
+  findD = chuoinhanESP.indexOf("D");
+  findE = chuoinhanESP.indexOf("E");
+
+   if (findA >= 0 && findB >= 0){
+    String data = chuoinhanESP.substring(findA + 1, findB);
+    garden1.setPump(data);
+  }
+
+  if (findB >= 0 && findC >= 0){
+    String data = chuoinhanESP.substring(findB + 1, findC);
+    garden1.setFan(data);
+  }
+
+  if (findC >= 0 && findD >= 0){
+    String data = chuoinhanESP.substring(findC + 1, findD);
+    garden1.setLight(data);
+  }
+
+  if (findD >= 0 && findE >= 0){
+    String data = chuoinhanESP.substring(findD + 1, findE);
+    garden1.setMode(data);
+  }
+  digitalWrite(PUMP,garden1.getPump() == 1?HIGH : LOW);
+  digitalWrite(FAN,garden1.getFan()== 1?HIGH : LOW);
+  digitalWrite(LIGHT,garden1.getLight()== 1?HIGH : LOW);
 }
