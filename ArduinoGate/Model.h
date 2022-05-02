@@ -35,7 +35,7 @@ public:
     if(fanString == "1"){
       this->fan = 1;
     }
-    else{
+    else if(fanString == "0"){
       this->fan = 0;
     }
   }
@@ -44,7 +44,7 @@ public:
     if(lightString == "1"){
       this->light = 1;
     }
-    else{
+    else if(lightString == "0"){
       this->light = 0;
     }
   }
@@ -53,7 +53,7 @@ public:
     if(pumpString == "1"){
       this->pump = 1;
     }
-    else{
+    else if(pumpString == "0"){
       this->pump = 0;
     }  
   }

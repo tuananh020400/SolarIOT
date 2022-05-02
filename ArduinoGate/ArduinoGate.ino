@@ -10,11 +10,12 @@ const byte diachi[][6] = {"11110","11111","11112"};
 
 SoftwareSerial Serial_Arduino(4,5);//RX - 4 - TX - 5
 
-String inputString;
+String inputString = "";
 bool stringComplete = false;
 
 byte receivenrf[30];
 char text[30];
+String chuoiguiESP = "";
 
 Garden garden1 = Garden(0,0,0,0,0,0,0);
 Garden garden2 = Garden(0,0,0,0,0,0,0);
@@ -28,6 +29,7 @@ void setup() {
 
 void loop() {
   Read_UARTESP();
+  sendData();
   ReadNRF();
 
 }
@@ -75,7 +77,7 @@ void NRFSetup(){
 
 void ReadNRF(){
  radio.stopListening();
- Read_UARTESP();
+ //Read_UARTESP();
  String send = 
  "A" + (String)garden1.getPump() + 
  "B" + (String)garden1.getFan() + 
@@ -94,9 +96,10 @@ void ReadNRF(){
 
  radio.startListening();
  while (!radio.available());
- Read_UARTESP();
+ //Read_UARTESP();
  radio.read(&receivenrf,sizeof(receivenrf));
- Serial_Arduino.println((String)((char*)receivenrf));
+ //Serial_Arduino.println((String)((char*)receivenrf));
+ chuoiguiESP = (String)((char*)receivenrf);
  //XulychuoiNRF((String)((char*)receivenrf));
  delay(10);
 }
@@ -177,4 +180,13 @@ void XuLyChuoiESP(String chuoinhanESP){
   }
 
   gate.hienthi();
+}
+
+void sendData(){
+  static unsigned long last = millis();
+  if( millis() - last > 1000){
+    Serial.print("chuoi");
+    Serial_Arduino.println(chuoiguiESP);
+    last = millis();
+  }
 }
