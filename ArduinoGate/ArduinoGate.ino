@@ -5,6 +5,10 @@
 #include <SoftwareSerial.h>
 #include "Model.h"
 
+#define TRIG_PIN 8
+#define ECHO_PIN 7
+#define TIME_OUT 5000
+
 RF24 radio(9,10); // CE, CSN
 const byte diachi[][6] = {"11110","11111","11112"};
 
@@ -31,7 +35,8 @@ void loop() {
   Read_UARTESP();
   sendData();
   ReadNRF();
-
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
 }
 
 void Read_UARTESP()
@@ -185,8 +190,39 @@ void XuLyChuoiESP(String chuoinhanESP){
 void sendData(){
   static unsigned long last = millis();
   if( millis() - last > 1000){
-    Serial.print("chuoi");
+    DocKhoangCach();
     Serial_Arduino.println(chuoiguiESP);
     last = millis();
+  }
+}
+float getDistance()
+{
+  long duration, distanceCm;
+   
+  digitalWrite(TRIG_PIN, LOW);
+  delayMicroseconds(2);
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
+  
+  duration = pulseIn(ECHO_PIN, HIGH, TIME_OUT);
+ 
+  // convert to distance
+  distanceCm = duration / 29.1 / 2;
+  
+  return distanceCm;
+}
+void DocKhoangCach(){
+  long distance = getDistance();
+
+  if (distance <= 0)
+  {
+    Serial.println("Echo time out !!");
+  }
+  else
+  {   
+    Serial.print("Distance to nearest obstacle (cm): ");
+    Serial.println(distance);
+    gate.setDoCao(distance);
   }
 }
