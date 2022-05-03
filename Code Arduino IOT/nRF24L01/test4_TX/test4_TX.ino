@@ -3,8 +3,8 @@
 #include <nRF24L01.h>
 #include <RF24.h>
 
-RF24 radio(7, 8); // CE, CSN
-const byte diachi[][6] = {"12345", "10000"}; //0, 1
+RF24 radio(9, 10); // CE, CSN
+const byte diachi[][6] = {"11112", "11110"}; //0, 1
 
 int led = 6;
 boolean nutnhan = 0;
@@ -19,12 +19,12 @@ void setup()
     Serial.println("Module không khởi động được...!!");
     while (1) {}
   }   
-  radio.openWritingPipe(diachi[1]);
+  radio.openWritingPipe(diachi[0]);
   //Chỉ có thể mở 1 đường ghi
   //Lệnh openWritingPipe có số đường truyền mặc định là 0
   //Mở 1 kênh có địa chỉ 10000 trên đường truyền 0
   //kênh này chỉ ghi data trên địa chỉ 10000   
-  radio.openReadingPipe(1, diachi[0]);
+  radio.openReadingPipe(1, diachi[1]);
   //Có thể mở 6 đường đọc cùng lúc
   //Nhưng đường 0 mặc định dùng cho ghi
   //Lệnh openReadingPipe có thể mở đường truyền từ 1-5
@@ -45,24 +45,17 @@ void setup()
 
 void loop() 
 {
+  byte receive[30];
   radio.stopListening(); //Ngưng nhận
-    gtbientro = analogRead(bientro);
-    gtbiendoi = map(gtbientro, 0, 1023, 0, 180);
-    radio.write(&gtbiendoi, sizeof(gtbiendoi));
-    Serial.print("Biến trở gửi: "); Serial.print(gtbiendoi); Serial.print("   ");
+  const char text[] = "hello";
+    radio.write(&text, sizeof(text));
+    Serial.print("đã gửi");
     delay(10);
       
   radio.startListening(); //Bắt đầu nhận
     while(!radio.available());
-    radio.read(&nutnhan, sizeof(nutnhan));
-    Serial.print("Nhận nút nhấn: "); Serial.println(nutnhan);
-    if (nutnhan == HIGH)
-     {
-       digitalWrite(led, HIGH);
-     }
-    else
-     {
-       digitalWrite(led, LOW);
-     }
+    radio.read(&receive, sizeof(receive));
+    Serial.println(String((char*)receive));
+    
     delay(10);  
 }

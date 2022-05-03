@@ -5,8 +5,8 @@ Servo myservo;
 #include <nRF24L01.h>
 #include <RF24.h>
 
-RF24 radio(7, 8); // CE, CSN
-const byte diachi[][6] = {"12345", "10000"};
+RF24 radio(9, 10); // CE, CSN
+const byte diachi[][6] = {"11111", "11113"};
 
 int servo = 5;
 int nutnhan = 6; 

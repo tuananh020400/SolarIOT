@@ -37,6 +37,7 @@ void loop() {
   if(garden1.getMode() == 1){
     while (1)
     {
+      Read_DAD();
       ReadNRF(setThietBiManual);
       if (garden1.getMode() == 0)
       {
@@ -49,6 +50,7 @@ void loop() {
   {
     while (1)
     {
+      Read_DAD();
       ReadNRF(setThietBiAuto);
       if (garden1.getMode() == 1)
       {
@@ -81,7 +83,6 @@ void NRFSetup(){
 
 void ReadNRF(void (*setThietBi)()){
  radio.stopListening();
- Read_DAT();
  Read_DHT();
  text = "A1B" + (String)garden1.getNhietDo() + "C" + (String)garden1.getDoAm() + "D" + (String)garden1.getDoAmDat()+ "E";
  text.toCharArray(mang,30);
@@ -102,9 +103,9 @@ void Read_DHT(){
   garden1.setNhietDo(dht.readTemperature()) ;
 }
 
-void Read_DAT(){
-  static float doAmDat = analogRead(A0);
-  garden1.setDoAmDat(map(doAmDat,0,1023,0,100));
+void Read_DAD(){
+  float doAmDat = analogRead(A0);
+  garden1.setDoAmDat(map(doAmDat,0,1023,100,0));
 }
 
 void XulychuoiNRF(String chuoinhanESP){

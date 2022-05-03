@@ -4,7 +4,7 @@
 #include <RF24.h>
 
 RF24 radio(9, 10); // CE, CSN
-const byte diachi[6] = "11111"; //Mảng kí tự dạng chuỗi có 6 kí tự
+const byte diachi[6] = "11112"; //Mảng kí tự dạng chuỗi có 6 kí tự
 
 int nutnhan = 6; boolean gtnutnhan = 0;
 int bientro = A0; int gtbientro; int gtbiendoi;
@@ -37,7 +37,7 @@ void setup()
 
 void loop() 
 {
-  String text = "A1B23.6C60.6D23E";
+  String text = "A2B23.6C60.6D23E";
   char mang[30];
   text.toCharArray(mang,30);
   radio.write(&mang, sizeof(mang));
