@@ -164,9 +164,11 @@ void Read_UART_ESP()
 void XulychuoiUART(String chuoinhanUART){
   int findA = -1;
   int findB = -1;
+  int findC = -1;
 
   findA = chuoinhanUART.indexOf("A");
   findB = chuoinhanUART.indexOf("B");
+  findC = chuoinhanUART.indexOf("C");
 
   if(findA >= 0 && findB >= 0){
     String data = chuoinhanUART.substring(findA + 1, findB);
@@ -175,6 +177,10 @@ void XulychuoiUART(String chuoinhanUART){
     }
     else if(data == "2"){
       SetCambien(chuoinhanUART,&garden2);
+    }
+    else if(data == "3"){
+      String docao = chuoinhanUART.substring(findB + 1, findC);
+      gate.setDoCao(docao.toFloat());
     }
   }
 }

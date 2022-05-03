@@ -82,7 +82,6 @@ void NRFSetup(){
 
 void ReadNRF(){
  radio.stopListening();
- //Read_UARTESP();
  String send = 
  "A" + (String)garden1.getPump() + 
  "B" + (String)garden1.getFan() + 
@@ -101,11 +100,8 @@ void ReadNRF(){
 
  radio.startListening();
  while (!radio.available());
- //Read_UARTESP();
  radio.read(&receivenrf,sizeof(receivenrf));
- //Serial_Arduino.println((String)((char*)receivenrf));
  chuoiguiESP = (String)((char*)receivenrf);
- //XulychuoiNRF((String)((char*)receivenrf));
  delay(10);
 }
 
@@ -192,6 +188,9 @@ void sendData(){
   if( millis() - last > 1000){
     DocKhoangCach();
     Serial_Arduino.println(chuoiguiESP);
+    Serial_Arduino.print("A3B");
+    Serial_Arduino.print(gate.getDoCao());
+    Serial_Arduino.println("C");
     last = millis();
   }
 }
