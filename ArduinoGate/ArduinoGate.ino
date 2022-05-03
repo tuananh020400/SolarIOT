@@ -5,6 +5,7 @@
 #include <SoftwareSerial.h>
 #include "Model.h"
 
+#define PUMP 3
 #define TRIG_PIN 8
 #define ECHO_PIN 7
 #define TIME_OUT 5000
@@ -29,17 +30,42 @@ void setup() {
   Serial.begin(9600);
   Serial_Arduino.begin(9600);
   NRFSetup();
+  pinMode(TRIG_PIN, OUTPUT);
+  pinMode(ECHO_PIN, INPUT);
+  pinMode(PUMP, OUTPUT);
 }
 
 void loop() {
-  Read_UARTESP();
-  sendData();
-  ReadNRF();
-  pinMode(TRIG_PIN, OUTPUT);
-  pinMode(ECHO_PIN, INPUT);
+if (gate.getCheDo() == 1)
+{
+  while (1)
+  {
+    Read_UARTESP(setPumpManual);
+    sendData();
+    ReadNRF();
+    if (gate.getCheDo() == 0)
+    {
+      break;
+    }
+  }
 }
 
-void Read_UARTESP()
+if (gate.getCheDo() == 0)
+{
+  while (1)
+  {
+    Read_UARTESP(setPumpAuto);
+    sendData();
+    ReadNRF();
+    if (gate.getCheDo() == 1)
+    {
+      break;
+    }
+  }
+}
+}
+
+void Read_UARTESP(void (*setPump)())
 {
   while (Serial_Arduino.available()) //lấy dữ liệu
   {
@@ -54,6 +80,7 @@ void Read_UARTESP()
     {
       Serial.println(inputString);
       XuLyChuoiESP(inputString);
+      setPump();
       inputString = "";
       stringComplete = false;
     }
@@ -224,4 +251,12 @@ void DocKhoangCach(){
     Serial.println(distance);
     gate.setDoCao(distance);
   }
+}
+
+void setPumpAuto(){
+  digitalWrite(PUMP,HIGH);
+
+}
+void setPumpManual(){
+  digitalWrite(PUMP,LOW);
 }
