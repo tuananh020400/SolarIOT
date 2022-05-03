@@ -34,8 +34,30 @@ void setup() {
 }
 
 void loop() {
-  ReadNRF(setThietBiManual);
-  //Read_Sensor();
+  if(garden1.getMode() == 1){
+    while (1)
+    {
+      ReadNRF(setThietBiManual);
+      if (garden1.getMode() == 0)
+      {
+        break;
+      }
+      
+    }
+  }
+  if (garden1.getMode() == 0)
+  {
+    while (1)
+    {
+      ReadNRF(setThietBiAuto);
+      if (garden1.getMode() == 1)
+      {
+        break;
+      } 
+    } 
+  }
+  
+  
 }
 
 void NRFSetup(){
@@ -85,15 +107,6 @@ void Read_DAT(){
   garden1.setDoAmDat(map(doAmDat,0,1023,0,100));
 }
 
-void Read_Sensor(){
-  static int lastSensor = millis();
-  if(millis() - lastSensor >= 500){
-    Read_DAT();
-    Read_DHT();
-    text = "A1B" + (String)garden1.getNhietDo() + "C" + (String)garden1.getDoAm() + "D" + (String)garden1.getDoAmDat()+ "E";
-    lastSensor = millis();
-  }
-}
 void XulychuoiNRF(String chuoinhanESP){
   int findA = -1;
   int findB = -1;
@@ -132,4 +145,13 @@ void setThietBiManual(){
     digitalWrite(PUMP,garden1.getPump() == 1?HIGH : LOW);
     digitalWrite(FAN,garden1.getFan()== 1?HIGH : LOW);
     digitalWrite(LIGHT,garden1.getLight()== 1?HIGH : LOW);
+}
+
+void setThietBiAuto(){
+  if(garden1.getNhietDo() < 30){
+    digitalWrite(LIGHT,HIGH);
+  }
+  else{
+    digitalWrite(LIGHT,LOW);
+  }
 }
