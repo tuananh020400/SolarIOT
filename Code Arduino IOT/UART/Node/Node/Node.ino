@@ -29,7 +29,7 @@ void setup() {
   pinMode(PUMP,OUTPUT);
   pinMode(LIGHT,OUTPUT);
   pinMode(A0,INPUT);
-  Serial.println("Start Node Module");
+  //Serial.println("Start Node Module");
   NRFSetup();
 }
 
@@ -65,7 +65,7 @@ void loop() {
 void NRFSetup(){
   if (!radio.begin()) 
   {
-    Serial.println("Module không khởi động được...!!");
+    //Serial.println("Module không khởi động được...!!");
   while (1) {}
   }
   radio.openWritingPipe(diachi[0]); 
@@ -77,7 +77,7 @@ void NRFSetup(){
   
   if (!radio.available())
   {
-    Serial.println("CHỜ KẾT NỐI.......");
+    //Serial.println("CHỜ KẾT NỐI.......");
   } 
 }
 
@@ -92,7 +92,7 @@ void ReadNRF(void (*setThietBi)()){
  radio.startListening();
  while (!radio.available());
  radio.read(&receivenrf,sizeof(receivenrf));
- Serial.println((String)((char*)receivenrf));
+ //Serial.println((String)((char*)receivenrf));
  XulychuoiNRF((String)((char*)receivenrf));
  setThietBi();
  delay(10);
@@ -100,7 +100,7 @@ void ReadNRF(void (*setThietBi)()){
 
 void Read_DHT(){
   garden1.setDoAm(dht.readHumidity()); 
-  garden1.setNhietDo(dht.readTemperature()) ;
+  garden1.setNhietDo(dht.readTemperature() - 3) ;
 }
 
 void Read_DAD(){
@@ -151,8 +151,20 @@ void setThietBiManual(){
 void setThietBiAuto(){
   if(garden1.getNhietDo() < 30){
     digitalWrite(LIGHT,HIGH);
+    digitalWrite(FAN,LOW);
+  }
+  else if(garden1.getNhietDo() > 35){
+    digitalWrite(LIGHT,LOW);
+    digitalWrite(FAN,LOW);
   }
   else{
     digitalWrite(LIGHT,LOW);
+    digitalWrite(FAN,LOW);
+  }
+  if(garden1.getDoAmDat() < 70){
+    digitalWrite(PUMP,HIGH);
+  }
+  else{
+    digitalWrite(PUMP,LOW);
   }
 }
