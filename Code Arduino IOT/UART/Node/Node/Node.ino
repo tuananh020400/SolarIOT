@@ -34,7 +34,7 @@ void setup() {
 }
 
 void loop() {
-  ReadNRF();
+  ReadNRF(setThietBiManual);
   //Read_Sensor();
 }
 
@@ -57,7 +57,7 @@ void NRFSetup(){
   } 
 }
 
-void ReadNRF(){
+void ReadNRF(void (*setThietBi)()){
  radio.stopListening();
  Read_DAT();
  Read_DHT();
@@ -71,23 +71,18 @@ void ReadNRF(){
  radio.read(&receivenrf,sizeof(receivenrf));
  Serial.println((String)((char*)receivenrf));
  XulychuoiNRF((String)((char*)receivenrf));
+ setThietBi();
  delay(10);
 }
 
 void Read_DHT(){
   garden1.setDoAm(dht.readHumidity()); 
   garden1.setNhietDo(dht.readTemperature()) ;
-//  Serial.print("Nhiet do: ");
-//  Serial.println(garden1.getNhietDo());               
-//  Serial.print("Do am: ");
-//  Serial.println(garden1.getDoAm());
 }
 
 void Read_DAT(){
   static float doAmDat = analogRead(A0);
   garden1.setDoAmDat(map(doAmDat,0,1023,0,100));
-//  Serial.print("Do am dat");
-//  Serial.println(garden1.getDoAmDat());
 }
 
 void Read_Sensor(){
@@ -96,7 +91,6 @@ void Read_Sensor(){
     Read_DAT();
     Read_DHT();
     text = "A1B" + (String)garden1.getNhietDo() + "C" + (String)garden1.getDoAm() + "D" + (String)garden1.getDoAmDat()+ "E";
-    //sprintf(text,"A1B%fC%fD%fE",
     lastSensor = millis();
   }
 }
@@ -132,7 +126,10 @@ void XulychuoiNRF(String chuoinhanESP){
     String data = chuoinhanESP.substring(findD + 1, findE);
     garden1.setMode(data);
   }
-  digitalWrite(PUMP,garden1.getPump() == 1?HIGH : LOW);
-  digitalWrite(FAN,garden1.getFan()== 1?HIGH : LOW);
-  digitalWrite(LIGHT,garden1.getLight()== 1?HIGH : LOW);
+}
+
+void setThietBiManual(){
+    digitalWrite(PUMP,garden1.getPump() == 1?HIGH : LOW);
+    digitalWrite(FAN,garden1.getFan()== 1?HIGH : LOW);
+    digitalWrite(LIGHT,garden1.getLight()== 1?HIGH : LOW);
 }
