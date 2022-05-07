@@ -140,10 +140,6 @@ void XuLyChuoiESP(String chuoinhanESP){
   int findE = -1;
   int findF = -1;
   int findG = -1;
-  int findH = -1;
-  int findI = -1;
-  int findJ = -1;
-  int findK = -1;
 
   findA = chuoinhanESP.indexOf("A");
   findB = chuoinhanESP.indexOf("B");
@@ -152,10 +148,6 @@ void XuLyChuoiESP(String chuoinhanESP){
   findE = chuoinhanESP.indexOf("E");
   findF = chuoinhanESP.indexOf("F");
   findG = chuoinhanESP.indexOf("G");
-  findH = chuoinhanESP.indexOf("H");
-  findI = chuoinhanESP.indexOf("I");
-  findJ = chuoinhanESP.indexOf("J");
-  findK = chuoinhanESP.indexOf("K");
 
   if (findA >= 0 && findB >= 0){
     String data = chuoinhanESP.substring(findA + 1, findB);
@@ -179,31 +171,11 @@ void XuLyChuoiESP(String chuoinhanESP){
 
   if (findE >= 0 && findF >= 0){
     String data = chuoinhanESP.substring(findE + 1, findF);
-    garden2.setPump(data);
+    gate.setCheDo(data);
   }
 
   if (findF >= 0 && findG >= 0){
     String data = chuoinhanESP.substring(findF + 1, findG);
-    garden2.setFan(data);
-  }
-
-  if (findG >= 0 && findH >= 0){
-    String data = chuoinhanESP.substring(findG + 1, findH);
-    garden2.setLight(data);
-  }
-
-  if (findH >= 0 && findI >= 0){
-    String data = chuoinhanESP.substring(findH + 1, findI);
-    garden2.setMode(data);
-  }
-
-  if (findI >= 0 && findJ >= 0){
-    String data = chuoinhanESP.substring(findI + 1, findJ);
-    gate.setCheDo(data);
-  }
-
-  if (findJ >= 0 && findK >= 0){
-    String data = chuoinhanESP.substring(findJ + 1, findK);
     gate.setMayBom(data);
   }
 

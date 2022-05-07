@@ -255,22 +255,8 @@ class _NodePageState extends State<NodePage> with TickerProviderStateMixin{
                   ),
                   child: Column(
                     children: [
-                      Expanded(child: _mqtt.getAppState.getGardent.getPumpStatus == 1?
-                      Lottie.asset(
-                          'assets/binhnuoctuoicay.json'
-                      ):
-                      Padding(
-                        padding: EdgeInsets.only(left: 35),
-                        child: Lottie.asset(
-                            'assets/pumpoff.json',
-                            controller: _pumpController,
-                            onLoaded: (composition){
-                              _pumpController.duration = composition.duration;
-                              _pumpController.forward();
-                              _pumpController.value = 0;
-                            }
-                        )
-                        ,)
+                      Expanded(
+                          child: _buildPumpIcon(),
                       ),
                       _mqtt.getAppState.getGardent.getMode == 1?
                       Padding(
@@ -362,6 +348,45 @@ class _NodePageState extends State<NodePage> with TickerProviderStateMixin{
           'assets/lightoff.json',
           repeat: false
       );
+    }
+  }
+
+  Widget _buildPumpIcon(){
+    if(_mqtt.getAppState.getGardent.getMode == 0){
+      return _mqtt.getAppState.getGardent.getDoAmDat < 70?
+      Lottie.asset(
+          'assets/binhnuoctuoicay.json'
+      ):
+      Padding(
+        padding: EdgeInsets.only(left: 35),
+        child: Lottie.asset(
+            'assets/pumpoff.json',
+            controller: _pumpController,
+            onLoaded: (composition){
+              _pumpController.duration = composition.duration;
+              _pumpController.forward();
+              _pumpController.value = 0;
+            }
+        )
+        ,);
+    }
+    else{
+      return _mqtt.getAppState.getGardent.getPumpStatus == 1?
+      Lottie.asset(
+          'assets/binhnuoctuoicay.json'
+      ):
+      Padding(
+        padding: EdgeInsets.only(left: 35),
+        child: Lottie.asset(
+            'assets/pumpoff.json',
+            controller: _pumpController,
+            onLoaded: (composition){
+              _pumpController.duration = composition.duration;
+              _pumpController.forward();
+              _pumpController.value = 0;
+            }
+        )
+        ,);
     }
   }
 
