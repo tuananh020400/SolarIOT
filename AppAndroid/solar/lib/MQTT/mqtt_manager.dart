@@ -77,7 +77,6 @@ class MQTTManager{
       pt = MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
       _currentState.setReceivedText(pt);
       _currentState.setGarden();
-      _currentState.setGarden1();
       _currentState.setGate();
     });
   }

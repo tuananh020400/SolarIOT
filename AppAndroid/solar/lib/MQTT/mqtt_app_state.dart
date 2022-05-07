@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 enum MQTTAppConnectionState {connected, disconnected, connecting}
 class MQTTAppState with ChangeNotifier{
   MQTTAppConnectionState _appConnectionState = MQTTAppConnectionState.disconnected;
-  static String _receivedText = '';
+  String _receivedText = '';
   Garden _garden = Garden(
       nhietDo: 0,
       doAmDat: 0,
@@ -37,14 +37,9 @@ class MQTTAppState with ChangeNotifier{
   String _connectionStringText = 'Disconnected';
 
   void setReceivedText(String text) {
-    _receivedText = _receivedText + text;
+    _receivedText = text;
     print(_receivedText);
     _json = jsonDecode(_receivedText);
-    if(_json ==
-        false){
-      _receivedText = '';
-    };
-
   }
   void setGarden(){
     _garden = Garden(
@@ -58,23 +53,6 @@ class MQTTAppState with ChangeNotifier{
         pumpButton: _json['pump'],
         fanButton: _json['fan'],
         mode: _json['mode']
-    );
-    notifyListeners();
-  }
-
-
-  void setGarden1(){
-    _garden1 = Garden(
-        nhietDo: _json['nhietdo1'],
-        doAm: _json['doam1'],
-        doAmDat: _json['doamdat1'],
-        lightStatus: _json['light1'],
-        fanStatus: _json['fan1'],
-        pumStatus: _json['pump1'],
-        lightButton: _json['light1'],
-        pumpButton: _json['pump1'],
-        fanButton: _json['fan1'],
-        mode: _json['mode1']
     );
     notifyListeners();
   }

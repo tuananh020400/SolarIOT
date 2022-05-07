@@ -19,7 +19,6 @@ String inputString;
 bool stringComplete = false;
 
 Garden garden1 = Garden(0,0,0,0,0,0,0);
-Garden garden2 = Garden(0,0,0,0,0,0,0);
 Gate gate = Gate(0,0,0);
 
 WiFiClient espClient;
@@ -59,15 +58,15 @@ void callback(char *topic, byte *payload, unsigned int length)
 {
   while (1)
   {
-      String response;
+    String response;
     for(int i = 0; i < length ; i++)
     {
         response += (char) payload[i];
     }
-    Serial.print("Message arrived [");
-    Serial.print(topic);
-    Serial.print("]: ");
-    Serial.println(response);
+//    Serial.print("Message arrived [");
+//    Serial.print(topic);
+//    Serial.print("]: ");
+//    Serial.println(response);
       XuLyChuoiMQTT(response);
       sendMQTT();
       sendArduino();
@@ -175,9 +174,6 @@ void XulychuoiUART(String chuoinhanUART){
     if(data == "1"){
       SetCambien(chuoinhanUART,&garden1);
     }
-    else if(data == "2"){
-      SetCambien(chuoinhanUART,&garden2);
-    }
     else if(data == "3"){
       String docao = chuoinhanUART.substring(findB + 1, findC);
       gate.setDoCao(docao.toFloat());
@@ -255,26 +251,6 @@ void XuLyChuoiMQTT(String chuoinhanESP){
     garden1.setMode(data);
   }
 
-  if (findE >= 0 && findF >= 0){
-    String data = chuoinhanESP.substring(findE + 1, findF);
-    garden2.setPump(data);
-  }
-
-  if (findF >= 0 && findG >= 0){
-    String data = chuoinhanESP.substring(findF + 1, findG);
-    garden2.setFan(data);
-  }
-
-  if (findG >= 0 && findH >= 0){
-    String data = chuoinhanESP.substring(findG + 1, findH);
-    garden2.setLight(data);
-  }
-
-  if (findH >= 0 && findI >= 0){
-    String data = chuoinhanESP.substring(findH + 1, findI);
-    garden2.setMode(data);
-  }
-
   if (findI >= 0 && findJ >= 0){
     String data = chuoinhanESP.substring(findI + 1, findJ);
     gate.setCheDo(data);
@@ -287,8 +263,6 @@ void XuLyChuoiMQTT(String chuoinhanESP){
 
   Serial.println("Garden1");
   garden1.hienthi();
-  Serial.println("Garden2");
-  garden2.hienthi();
   gate.hienthi();
 }
 
@@ -301,32 +275,12 @@ String JsonGarden1(){
     ", \"light\" : " + (String)garden1.getLight() +
     ", \"fan\" : " + (String)garden1.getFan() +
     ", \"pump\" : " + (String)garden1.getPump() +
-    ", \"mode\" : " + (String)garden1.getMode();
+    ", \"mode\" : " + (String)garden1.getMode() +
+    ", \"chedo\" : " + (String)gate.getCheDo() + 
+    ", \"maybom\" : " + (String)gate.getMayBom() + 
+    ", \"docao\" : " + (String)gate.getDoCao() + " }";
 
     return html;
-}
-
-String JSONGarden2(){
-    static String html;
-    html = 
-    ", \"nhietdo1\": " + (String)garden2.getNhietDo() + 
-    ", \"doam1\": " + (String)garden2.getDoAm() + 
-    ", \"doamdat1\": "+ (String)garden2.getDoAmDat() +
-    ", \"light1\" : " + (String)garden2.getLight() +
-    ", \"fan1\" : " + (String)garden2.getFan() +
-    ", \"pump1\" : " + (String)garden2.getPump() +
-    ", \"mode1\" : " + (String)garden2.getMode();
-    
-    return html;
-}
-
-String JsonGate(){
-  static String html;
-  html = 
-  ", \"chedo\" : " + (String)gate.getCheDo() + 
-  ", \"maybom\" : " + (String)gate.getMayBom() + 
-  ", \"docao\" : " + (String)gate.getDoCao() + " }";
-  return html;
 }
 
 void sendArduino(){
@@ -335,27 +289,15 @@ void sendArduino(){
   "A" + (String)garden1.getPump() + 
   "B" + (String)garden1.getFan() + 
   "C" + (String)garden1.getLight() + 
-  "D" + (String)garden1.getMode() + "E";
+  "D" + (String)garden1.getMode() + 
+  "E" + (String)gate.getCheDo() +
+  "F" + (String)gate.getMayBom() + "G";
   Serial_ESP.println(send);
-  delay(100);
-  send =
-  "E" + (String)garden2.getPump() + 
-  "F" + (String)garden2.getFan() + 
-  "G" + (String)garden2.getLight() + 
-  "H" + (String)garden2.getMode() + "I";
-  Serial_ESP.println(send);
-  delay(100);
-  send = 
-  "I" + (String)gate.getCheDo() + 
-  "J" + (String)gate.getMayBom() + "K";
   Serial.println(send);
-  Serial_ESP.println(send);
-  delay(100);
 }
+
 void sendMQTT(){
     client.publish(PUB_TOPIC,JsonGarden1().c_str());
-    client.publish(PUB_TOPIC,JSONGarden2().c_str());
-    client.publish(PUB_TOPIC,JsonGate().c_str());
 }
 
 void sendData(){

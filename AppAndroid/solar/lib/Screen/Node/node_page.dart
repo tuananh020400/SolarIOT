@@ -112,11 +112,13 @@ class _NodePageState extends State<NodePage> with TickerProviderStateMixin{
       backgroundColor: Color(0xFF292636),
       position: _mqtt.getAppState.getGardent.getMode,
       onToggleCallback: (index) {
-        setState(() {});
+        setState(() {
+        });
         _mqtt.getAppState.getGardent.setMode( _mqtt.getAppState.getGardent.getMode == 1? 0 : 1);
         index == 1?
         _mqtt.getManager.publish("D1E"):
         _mqtt.getManager.publish("D0E");
+
       },
       width: MediaQuery.of(context).size.width,
       hight: 70,
@@ -196,20 +198,7 @@ class _NodePageState extends State<NodePage> with TickerProviderStateMixin{
                         child: SizedBox(
                           height: 50,
                           width: 60,
-                          child: _mqtt.getAppState.getGardent.getFanStatus == 1?
-                          Lottie.asset(
-                            'assets/fan.json',
-                          ) :
-                          Lottie.asset(
-                              'assets/fanoff.json',
-                              repeat: false,
-                              controller: _fanController,
-                              onLoaded: (composition){
-                                _fanController.duration = composition.duration;
-                                _fanController.forward();
-                                _fanController.value = 0;
-                              }
-                          ),
+                          child: _buildFanIcon(),
                         ),
                       ),
                       _mqtt.getAppState.getGardent.getMode == 1?
@@ -237,20 +226,9 @@ class _NodePageState extends State<NodePage> with TickerProviderStateMixin{
                   ),
                   child: Column(
                     children: [
-                      Expanded(child: _mqtt.getAppState.getGardent.getLightStatus == 1?
-                      Lottie.asset(
-                          'assets/light.json',
-                          controller: _lightController,
-                          repeat: true,
-                          onLoaded: (composition){
-                            _lightController.duration = composition.duration;
-                            _lightController.forward();
-                          }
-                      ) :
-                      Lottie.asset(
-                          'assets/lightoff.json',
-                          repeat: false
-                      )),
+                      Expanded(
+                          child: _buildLightIcon()
+                      ),
                       _mqtt.getAppState.getGardent.getMode == 1?
                       Padding(
                         padding: const EdgeInsets.only(bottom: 20),
@@ -316,5 +294,76 @@ class _NodePageState extends State<NodePage> with TickerProviderStateMixin{
       ),
     );
   }
+
+  Widget _buildFanIcon(){
+    if(_mqtt.getAppState.getGardent.getMode == 0){
+      return _mqtt.getAppState.getGardent.getNhietDo > 30?
+      Lottie.asset(
+        'assets/fan.json',
+      ) :
+      Lottie.asset(
+          'assets/fanoff.json',
+          repeat: false,
+          controller: _fanController,
+          onLoaded: (composition){
+            _fanController.duration = composition.duration;
+            _fanController.forward();
+            _fanController.value = 0;
+          }
+      );
+    }
+    else{
+      return _mqtt.getAppState.getGardent.getFanStatus == 1?
+      Lottie.asset(
+        'assets/fan.json',
+      ) :
+      Lottie.asset(
+          'assets/fanoff.json',
+          repeat: false,
+          controller: _fanController,
+          onLoaded: (composition){
+            _fanController.duration = composition.duration;
+            _fanController.forward();
+            _fanController.value = 0;
+          }
+      );
+    }
+  }
+
+  Widget _buildLightIcon(){
+    if(_mqtt.getAppState.getGardent.getMode == 0){
+      return _mqtt.getAppState.getGardent.getNhietDo < 30?
+      Lottie.asset(
+          'assets/light.json',
+          controller: _lightController,
+          repeat: true,
+          onLoaded: (composition){
+            _lightController.duration = composition.duration;
+            _lightController.forward();
+          }
+      ) :
+      Lottie.asset(
+          'assets/lightoff.json',
+          repeat: false
+      );
+    }
+    else{
+    return _mqtt.getAppState.getGardent.getLightStatus == 1?
+      Lottie.asset(
+          'assets/light.json',
+          controller: _lightController,
+          repeat: true,
+          onLoaded: (composition){
+            _lightController.duration = composition.duration;
+            _lightController.forward();
+          }
+      ) :
+      Lottie.asset(
+          'assets/lightoff.json',
+          repeat: false
+      );
+    }
+  }
+
 
 }
