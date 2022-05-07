@@ -221,14 +221,26 @@ void DocKhoangCach(){
   {   
     Serial.print("Distance to nearest obstacle (cm): ");
     Serial.println(distance);
-    gate.setDoCao(distance);
+    gate.setDoCao(33 - distance);
   }
 }
 
 void setPumpAuto(){
-  digitalWrite(PUMP,HIGH);
+  if(gate.getDoCao() >= 28){
+     digitalWrite(PUMP,LOW);
+  }
+  else if(gate.getDoCao() <= 5){
+    digitalWrite(PUMP,HIGH);
+  }
 
 }
 void setPumpManual(){
-  digitalWrite(PUMP,LOW);
+  if(gate.getDoCao() >= 28){
+     digitalWrite(PUMP,LOW);
+  }
+  else{
+    gate.getMayBom() == 1?
+    digitalWrite(PUMP,HIGH):
+    digitalWrite(PUMP,LOW);
+  }
 }

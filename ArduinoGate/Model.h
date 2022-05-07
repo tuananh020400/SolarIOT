@@ -130,16 +130,16 @@ public:
      if(chedoString == "1"){
        this->chedo = 1;
      }
-     else{
+     else if(chedoString == "0"){
        this->chedo = 0;
      }
    }
 
    void setMayBom(String maybomString){
      if(maybomString == "1"){
-       this->maybom = 1;
+       this->maybom  = 1;
      }
-     else{
+     else if(maybomString == "0"){
        this->maybom = 0;
      }
    }

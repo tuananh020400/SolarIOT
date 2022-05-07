@@ -29,7 +29,7 @@ class _Chart extends State<Chart>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return SfCartesianChart(
-      title: ChartTitle(text: '${widget.data} °C',textStyle: TextStyle(color: Colors.red,),alignment: ChartAlignment.far),
+      title: ChartTitle(text: '${widget.data.toInt()} °C',textStyle: TextStyle(color: Colors.red,),alignment: ChartAlignment.far),
       tooltipBehavior: TooltipBehavior(enable: true),
       series: <LineSeries<LiveData, int>>[
         LineSeries<LiveData, int>(
@@ -57,7 +57,7 @@ class _Chart extends State<Chart>{
     );
   }
 
-  int time = 19;
+  int time = 24;
   void updateDataSource(Timer timer) {
     chartData.add(LiveData(time++, (widget.data.round())));
     chartData.removeAt(0);
@@ -85,6 +85,11 @@ class _Chart extends State<Chart>{
       LiveData(16, 0),
       LiveData(17, 0),
       LiveData(18, 0),
+      LiveData(19, 0),
+      LiveData(20, 0),
+      LiveData(21, 0),
+      LiveData(22, 0),
+      LiveData(23, 0),
 
     ];
   }
