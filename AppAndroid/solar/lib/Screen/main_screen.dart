@@ -81,6 +81,7 @@ class _MQTTViewState extends State<MQTTView>{
       buttonText: [_currentAppState.getConnectionStringText,_currentAppState.getConnectionStringText],
       onColor: _currentAppState.getAppConnectionState == MQTTAppConnectionState.disconnected? Colors.red : Colors.blue,
       offColor: _currentAppState.getAppConnectionState == MQTTAppConnectionState.disconnected? Colors.red : Colors.blue,
+      position: _currentAppState.getAppConnectionState == MQTTAppConnectionState.disconnected? false:true,
       onToggleCallback: (index) {
         setState(() {});
         if(index == 0){

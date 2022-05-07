@@ -115,6 +115,7 @@ class ConnectButton extends StatefulWidget {
   final ValueChanged onToggleCallback;
   final Color onColor;
   final Color offColor;
+  bool position;
 
   final backgroundColor = Color(0xFF292636);
   final textColor = Colors.white;
@@ -125,13 +126,13 @@ class ConnectButton extends StatefulWidget {
     required this.onToggleCallback,
     required this.onColor,
     required this.offColor,
+    required this.position,
   });
   @override
   _ConnectButtonState createState() => _ConnectButtonState();
 }
 
 class _ConnectButtonState extends State<ConnectButton> {
-  bool initialPosition = false;
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -141,9 +142,8 @@ class _ConnectButtonState extends State<ConnectButton> {
         children: <Widget>[
           GestureDetector(
             onTap: () {
-              initialPosition = !initialPosition;
               var index = 1;
-              if (!initialPosition) {
+              if (widget.position) {
                 index = 0;
               }
               widget.onToggleCallback(index);
@@ -181,19 +181,20 @@ class _ConnectButtonState extends State<ConnectButton> {
               duration: const Duration(milliseconds: 250),
               curve: Curves.decelerate,
               alignment:
-              !initialPosition ? Alignment.centerLeft : Alignment.centerRight,
+              //!initialPosition ? Alignment.centerLeft : Alignment.centerRight,
+              !widget.position ? Alignment.centerLeft : Alignment.centerRight,
               child: Container(
                 width: width * 0.5,
                 height: width * 0.13,
                 decoration: ShapeDecoration(
-                  color: !initialPosition ?widget.offColor : widget.onColor,
+                  color: widget.position ?widget.offColor : widget.onColor,
                   shadows: null,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(width * 0.1),
                   ),
                 ),
                 child: Text(
-                  initialPosition ? widget.buttonText[0] : widget.buttonText[1],
+                  !widget.position ? widget.buttonText[0] : widget.buttonText[1],
                   style: TextStyle(
                     fontFamily: 'Rubik',
                     fontSize: width * 0.045,
