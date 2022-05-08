@@ -16,7 +16,7 @@ DHT dht(DHTPIN, DHTTYPE);
 RF24 radio(9,10); // CE, CSN
 const byte diachi[][6] = {"11111","11110"};
 
-byte receivenrf[30];
+byte receivenrf[4];
 String text = "";
 char mang[30];
 
@@ -92,8 +92,8 @@ void ReadNRF(void (*setThietBi)()){
  radio.startListening();
  while (!radio.available());
  radio.read(&receivenrf,sizeof(receivenrf));
- //Serial.println((String)((char*)receivenrf));
- XulychuoiNRF((String)((char*)receivenrf));
+//Serial.println((String)((char*)receivenrf));
+ XulychuoiNRF(receivenrf);
  setThietBi();
  delay(10);
 }
@@ -108,38 +108,11 @@ void Read_DAD(){
   garden1.setDoAmDat(map(doAmDat,0,1023,100,0));
 }
 
-void XulychuoiNRF(String chuoinhanESP){
-  int findA = -1;
-  int findB = -1;
-  int findC = -1;
-  int findD = -1;
-  int findE = -1;
-
-  findA = chuoinhanESP.indexOf("A");
-  findB = chuoinhanESP.indexOf("B");
-  findC = chuoinhanESP.indexOf("C");
-  findD = chuoinhanESP.indexOf("D");
-  findE = chuoinhanESP.indexOf("E");
-
-   if (findA >= 0 && findB >= 0){
-    String data = chuoinhanESP.substring(findA + 1, findB);
-    garden1.setPump(data);
-  }
-
-  if (findB >= 0 && findC >= 0){
-    String data = chuoinhanESP.substring(findB + 1, findC);
-    garden1.setFan(data);
-  }
-
-  if (findC >= 0 && findD >= 0){
-    String data = chuoinhanESP.substring(findC + 1, findD);
-    garden1.setLight(data);
-  }
-
-  if (findD >= 0 && findE >= 0){
-    String data = chuoinhanESP.substring(findD + 1, findE);
-    garden1.setMode(data);
-  }
+void XulychuoiNRF(byte* chuoinhanESP){
+  garden1.setPump(chuoinhanESP[0]);
+  garden1.setFan(chuoinhanESP[1]);
+  garden1.setLight(chuoinhanESP[2]);
+  garden1.setMode(chuoinhanESP[3]);
 }
 
 void setThietBiManual(){

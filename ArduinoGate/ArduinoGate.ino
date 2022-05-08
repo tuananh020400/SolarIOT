@@ -109,19 +109,24 @@ void NRFSetup(){
 
 void ReadNRF(){
  radio.stopListening();
- String send = 
- "A" + (String)garden1.getPump() + 
- "B" + (String)garden1.getFan() + 
- "C" + (String)garden1.getLight() + 
- "D" + (String)garden1.getMode()+
- "E" + (String)garden2.getPump() + 
- "F" + (String)garden2.getFan() + 
- "G" + (String)garden2.getLight() + 
- "H" + (String)garden2.getMode() +
- "I" + (String)gate.getCheDo() + 
- "J" + (String)gate.getMayBom() + "K";
- static char text[30];
- send.toCharArray(text,30);
+//  String send = 
+//  "A" + (String)garden1.getPump() + 
+//  "B" + (String)garden1.getFan() + 
+//  "C" + (String)garden1.getLight() + 
+//  "D" + (String)garden1.getMode()+
+//  "E" + (String)garden2.getPump() + 
+//  "F" + (String)garden2.getFan() + 
+//  "G" + (String)garden2.getLight() + 
+//  "H" + (String)garden2.getMode() +
+//  "I" + (String)gate.getCheDo() + 
+//  "J" + (String)gate.getMayBom() + "K";
+ static byte text[4];
+//  send.toCharArray(text,30);
+text[0] = garden1.getPump();
+text[1] = garden1.getFan();
+text[2] = garden1.getLight();
+text[3] = garden1.getMode();
+
  radio.write(&text, sizeof(text));
  delay(10);
 

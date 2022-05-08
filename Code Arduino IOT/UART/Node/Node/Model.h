@@ -31,38 +31,38 @@ public:
     this->doamdat = doamdat;
   }
 
-  void setFan(String fanString){
-    if(fanString == "1"){
+  void setFan(bool fanStatus){
+    if(fanStatus == 1){
       this->fan = 1;
     }
-    else{
+    else if(fanStatus == 0){
       this->fan = 0;
     }
   }
 
-  void setLight(String lightString){
-    if(lightString == "1"){
+  void setLight(bool lightString){
+    if(lightString == 1){
       this->light = 1;
     }
-    else{
+    else if(lightString == 0){
       this->light = 0;
     }
   }
 
-  void setPump(String pumpString){
-    if(pumpString == "1"){
+  void setPump(bool pumpString){
+    if(pumpString == 1){
       this->pump = 1;
     }
-    else{
+    else if(pumpString == 0){
       this->pump = 0;
     }  
   }
 
-  void setMode(String modeString){
-    if(modeString == "1"){
+  void setMode(bool modeString){
+    if(modeString == 1){
       this->mode = 1;
     }
-    else{
+    else if(modeString == 0){
       this->mode = 0;
     }
   }
@@ -130,16 +130,16 @@ public:
      if(chedoString == "1"){
        this->chedo = 1;
      }
-     else{
+     else if(chedoString == "0"){
        this->chedo = 0;
      }
    }
 
    void setMayBom(String maybomString){
      if(maybomString == "1"){
-       this->maybom = 1;
+       this->maybom  = 1;
      }
-     else{
+     else if(maybomString == "0"){
        this->maybom = 0;
      }
    }
