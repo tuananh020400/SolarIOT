@@ -18,7 +18,7 @@ const byte diachi[][6] = {"11111","11110"};
 
 byte receivenrf[4];
 String text = "";
-char mang[30];
+float mang[3];
 
 Garden garden1 = Garden(0,0,0,0,0,0,0);
 
@@ -82,20 +82,21 @@ void NRFSetup(){
 }
 
 void ReadNRF(void (*setThietBi)()){
- radio.stopListening();
- Read_DHT();
- text = "A1B" + (String)garden1.getNhietDo() + "C" + (String)garden1.getDoAm() + "D" + (String)garden1.getDoAmDat()+ "E";
- text.toCharArray(mang,30);
- radio.write(&mang, sizeof(mang));
- delay(10);
+  radio.stopListening();
+  Read_DHT();
+  mang[0] = garden1.getNhietDo();
+  mang[1] = garden1.getDoAm();
+  mang[2] = garden1.getDoAmDat();
+  radio.write(&mang, sizeof(mang));
+  delay(10);
 
- radio.startListening();
- while (!radio.available());
- radio.read(&receivenrf,sizeof(receivenrf));
-//Serial.println((String)((char*)receivenrf));
- XulychuoiNRF(receivenrf);
- setThietBi();
- delay(10);
+  radio.startListening();
+  while (!radio.available());
+  radio.read(&receivenrf,sizeof(receivenrf));
+  //Serial.println((String)((char*)receivenrf));
+  XulychuoiNRF(receivenrf);
+  setThietBi();
+  delay(10);
 }
 
 void Read_DHT(){

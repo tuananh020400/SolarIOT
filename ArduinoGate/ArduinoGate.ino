@@ -18,8 +18,7 @@ SoftwareSerial Serial_Arduino(4,5);//RX - 4 - TX - 5
 String inputString = "";
 bool stringComplete = false;
 
-byte receivenrf[30];
-char text[30];
+float receivenrf[3];
 String chuoiguiESP = "";
 
 Garden garden1 = Garden(0,0,0,0,0,0,0);
@@ -108,33 +107,20 @@ void NRFSetup(){
 }
 
 void ReadNRF(){
- radio.stopListening();
-//  String send = 
-//  "A" + (String)garden1.getPump() + 
-//  "B" + (String)garden1.getFan() + 
-//  "C" + (String)garden1.getLight() + 
-//  "D" + (String)garden1.getMode()+
-//  "E" + (String)garden2.getPump() + 
-//  "F" + (String)garden2.getFan() + 
-//  "G" + (String)garden2.getLight() + 
-//  "H" + (String)garden2.getMode() +
-//  "I" + (String)gate.getCheDo() + 
-//  "J" + (String)gate.getMayBom() + "K";
- static byte text[4];
-//  send.toCharArray(text,30);
-text[0] = garden1.getPump();
-text[1] = garden1.getFan();
-text[2] = garden1.getLight();
-text[3] = garden1.getMode();
+  radio.stopListening();
+  static byte text[4];
+  text[0] = garden1.getPump();
+  text[1] = garden1.getFan();
+  text[2] = garden1.getLight();
+  text[3] = garden1.getMode();
+  radio.write(&text, sizeof(text));
+  delay(10);
 
- radio.write(&text, sizeof(text));
- delay(10);
-
- radio.startListening();
- while (!radio.available());
- radio.read(&receivenrf,sizeof(receivenrf));
- chuoiguiESP = (String)((char*)receivenrf);
- delay(10);
+  radio.startListening();
+  while (!radio.available());
+  radio.read(&receivenrf,sizeof(receivenrf));
+  chuoiguiESP = "A1B" + (String)receivenrf[0] + "C" + (String)receivenrf[1] + "D" + (String)receivenrf[2] + "E";
+  delay(10);
 }
 
 void XuLyChuoiESP(String chuoinhanESP){
