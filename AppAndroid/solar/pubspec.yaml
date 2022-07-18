@@ -88,6 +88,8 @@ flutter:
     - assets/waterfall.json
     - assets/pump.png
     - assets/pumpon.png
+    - assets/maybomoff.png
+    - assets/maybomon.png
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

@@ -82,12 +82,12 @@ class _GatePageState extends State<GatePage> with SingleTickerProviderStateMixin
                       child: LinearPercentIndicator(
                         width: 300,
                         lineHeight: 150,
-                        percent: _mqtt.getAppState.getGate.getDoCao/100,
+                        percent: (_mqtt.getAppState.getGate.getDoCao)*100/(100*28),
                         linearStrokeCap: LinearStrokeCap.butt,
                         progressColor: Colors.blue,
                         center: Transform.rotate(
                           angle: pi/2,
-                          child: Text('${_mqtt.getAppState.getGate.getDoCao}%',
+                          child: Text('${((_mqtt.getAppState.getGate.getDoCao)*100/28).toInt()}%',
                             style: TextStyle(
                                 color: Color(0xFF292636),
                                 fontSize: 25,fontWeight: FontWeight.bold
@@ -106,7 +106,7 @@ class _GatePageState extends State<GatePage> with SingleTickerProviderStateMixin
                       children: [
                         Text('Thể tích',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),),
                         Padding(padding: EdgeInsets.all(1)),
-                        Text('${_mqtt.getAppState.getGate.getDoCao*5/100}L/5L',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),),
+                        Text('${((_mqtt.getAppState.getGate.getDoCao)*15/28).toStringAsFixed(2)}L/15L',style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),),
                       ],
                     ),
                 )
@@ -148,6 +148,7 @@ class _GatePageState extends State<GatePage> with SingleTickerProviderStateMixin
         child: Container(
           child: Row(
           children: [
+            _mqtt.getAppState.getGate.getCheDo == 1?
             Expanded(
                 child: CupertinoSwitch(
                     value: _mqtt.getAppState.getGate.getMayBomButton == 1?true : false,
@@ -161,15 +162,13 @@ class _GatePageState extends State<GatePage> with SingleTickerProviderStateMixin
                       _mqtt.getManager.publish('J0K');
                     }
                 ),
-            ),
+            ) : SizedBox.shrink(),
             Expanded(
                 child: SizedBox(
                     height: 100,
                     child: Transform.rotate(
-                      angle: pi/2,
-                      child: _mqtt.getAppState.getGate.getMayBom == 1?
-                      Image.asset('assets/pumpon.png'):
-                      Image.asset('assets/pump.png'),
+                      angle: 0,
+                      child: _buildMayBomIcon(),
                     )
                 )
             )
@@ -177,5 +176,36 @@ class _GatePageState extends State<GatePage> with SingleTickerProviderStateMixin
         ),
       ),
     );
+  }
+
+  Widget _buildMayBomIcon(){
+    int maybom = 0;
+    if(_mqtt.getAppState.getGate.getCheDo == 0){
+      if(_mqtt.getAppState.getGate.getDoCao >= 28){
+        maybom = 0;
+      }
+      else if(_mqtt.getAppState.getGate.getDoCao <= 10){
+        maybom = 1;
+      }
+
+      if(maybom == 1){
+        return Image.asset('assets/maybomon.png');
+      }
+      else{
+        return Image.asset('assets/maybomoff.png');
+      }
+    }
+
+    else{
+      if(_mqtt.getAppState.getGate.getDoCao >= 28){
+        return Image.asset('assets/maybomoff.png');
+      }
+      else{
+        return _mqtt.getAppState.getGate.getMayBom == 1?
+        Image.asset('assets/maybomon.png'):
+        Image.asset('assets/maybomoff.png');
+
+    }
+    }
   }
 }

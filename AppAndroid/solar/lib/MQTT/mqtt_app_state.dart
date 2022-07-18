@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
@@ -59,13 +60,25 @@ class MQTTAppState with ChangeNotifier{
 
   void setGate(){
     _gate = Gate(
-      docao: _json['docao'],
+      docao: setDocao(),
       chedo: _json['chedo'],
       maybom: _json['maybom'],
       maybomButton: _json['maybom'],
     );
     _receivedText = '';
     notifyListeners();
+  }
+
+  double setDocao(){
+    if( _json['docao'] >= 28){
+      return 28.0;
+    }
+    else if ( _json['docao'] >= 0){
+      return _json['docao'].toDouble();
+    }
+    else{
+      return 0.0;
+    }
   }
 
   void clearReceiveText(){

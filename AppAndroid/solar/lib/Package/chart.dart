@@ -4,7 +4,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'dart:async';
 
 class Chart extends StatefulWidget{
-  double data;
+  int data;
   Chart({Key? key, required this.data}) : super(key: key);
 
   @override
@@ -29,7 +29,7 @@ class _Chart extends State<Chart>{
   Widget build(BuildContext context) {
     // TODO: implement build
     return SfCartesianChart(
-      title: ChartTitle(text: '${widget.data.toInt()} °C',textStyle: TextStyle(color: Colors.red,),alignment: ChartAlignment.far),
+      title: ChartTitle(text: '${widget.data} °C',textStyle: TextStyle(color: Colors.red,),alignment: ChartAlignment.far),
       tooltipBehavior: TooltipBehavior(enable: true),
       series: <LineSeries<LiveData, int>>[
         LineSeries<LiveData, int>(

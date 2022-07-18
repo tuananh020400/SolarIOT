@@ -131,8 +131,8 @@ class _MQTTViewState extends State<MQTTView>{
                     animation: false,
                     progressColor: Colors.blue,
                     backgroundColor:state == MQTTAppConnectionState.connected? Colors.white54 : Colors.white10,
-                    percent:state == MQTTAppConnectionState.connected? _currentAppState.getGate.getDoCao.toDouble() / 100 : 0,
-                    center:state == MQTTAppConnectionState.connected? Text('${_currentAppState.getGate.getDoCao.toDouble()}%') :
+                    percent:state == MQTTAppConnectionState.connected? ((_mqtt.getAppState.getGate.getDoCao)/28).toDouble() : 0,
+                    center:state == MQTTAppConnectionState.connected? Text('${((_mqtt.getAppState.getGate.getDoCao)*100/28).toInt()}%') :
                     Text('Mực nước',style: TextStyle(
                         color: Colors.white38,
                         fontWeight: FontWeight.bold

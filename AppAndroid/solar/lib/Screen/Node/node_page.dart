@@ -126,7 +126,7 @@ class _NodePageState extends State<NodePage> with TickerProviderStateMixin{
   }
 
   Widget _buildNhietDo(){
-    return Chart(data: _mqtt.getAppState.getGardent.getNhietDo.toDouble());
+    return Chart(data: _mqtt.getAppState.getGardent.getNhietDo.toInt());
   }
 
   Widget _buildDoAm() {
@@ -141,7 +141,7 @@ class _NodePageState extends State<NodePage> with TickerProviderStateMixin{
             child: Lottie.asset('assets/in.json'),
           ),
           Center(
-            child: Text('${_mqtt.getAppState.getGardent.getDoAm}%',
+            child: Text('${(_mqtt.getAppState.getGardent.getDoAm).toInt()}%',
               style: TextStyle(
                 color: Color(0xFF0D3770),
                 fontSize: 50,
@@ -166,7 +166,7 @@ class _NodePageState extends State<NodePage> with TickerProviderStateMixin{
             child: Lottie.asset('assets/in.json'),
           ),
           Center(
-            child: Text('${_mqtt.getAppState.getGardent.getDoAmDat}%',
+            child: Text('${(_mqtt.getAppState.getGardent.getDoAmDat).toInt()}%',
               style: TextStyle(
                 color: Color(0xFF0D3770),
                 fontSize: 50,

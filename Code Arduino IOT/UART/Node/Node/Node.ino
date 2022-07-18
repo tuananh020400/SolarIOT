@@ -101,7 +101,7 @@ void ReadNRF(void (*setThietBi)()){
 
 void Read_DHT(){
   garden1.setDoAm(dht.readHumidity()); 
-  garden1.setNhietDo(dht.readTemperature() - 3) ;
+  garden1.setNhietDo(dht.readTemperature() - 1) ;
 }
 
 void Read_DAD(){
